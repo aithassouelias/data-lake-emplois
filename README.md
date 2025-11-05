@@ -1,4 +1,4 @@
-# Projet Data Lake — Analyse du Marché de l’Emploi (LinkedIn & Glassdoor)
+# Projet Data Lake — Analyse du Marché de l’Emploi
 
 ## 📘 Présentation
 Ce projet s’inscrit dans le cadre du cours **Gestion de Données Massives** du **Master 2 Business Intelligence & Analytics**.  
