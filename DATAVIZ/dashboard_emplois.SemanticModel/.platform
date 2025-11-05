@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "dashboard_emplois"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e22cc3c8-42c7-4c62-9f6f-b9f84c48554a"
+  }
+}
