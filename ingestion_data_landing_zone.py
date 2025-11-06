@@ -24,7 +24,7 @@ def copy_files_from_source_to_cible(myPathSource, myPattern, myPathCible):
     """
 
     # Creation ou ouverture du fichier de metadonnees techniques
-    path_file_metadata = "C:/TD_DATALAKE/DATALAKE/00_METADATA/metadata_technique.csv"
+    path_file_metadata = "./DATALAKE/00_METADATA/metadata_technique.csv"
     
     # Vérifie si le fichier existe déjà
     file_exists = os.path.isfile(path_file_metadata)
@@ -63,6 +63,6 @@ def copy_files_from_source_to_cible(myPathSource, myPattern, myPathCible):
     print("Ingestion des fichiers de type ", myPattern, " effectuée dans la landing zone ", myPathCible, "\n")
 
 # Ingestion des fichiers dans la landing zone
-copy_files_from_source_to_cible("C:/TD_DATALAKE/DATALAKE/0_SOURCE_WEB", "*INFO-EMP*.html", "C:/TD_DATALAKE/DATALAKE/1_LANDING_ZONE/LINKEDIN/EMP")
-copy_files_from_source_to_cible("C:/TD_DATALAKE/DATALAKE/0_SOURCE_WEB", "*INFO-SOC*.html", "C:/TD_DATALAKE/DATALAKE/1_LANDING_ZONE/GLASSDOOR/SOC")
-copy_files_from_source_to_cible("C:/TD_DATALAKE/DATALAKE/0_SOURCE_WEB", "*AVIS-SOC*.html", "C:/TD_DATALAKE/DATALAKE/1_LANDING_ZONE/GLASSDOOR/AVI")
+copy_files_from_source_to_cible("./DATALAKE/0_SOURCE_WEB", "*INFO-EMP*.html", "./DATALAKE/1_LANDING_ZONE/LINKEDIN/EMP")
+copy_files_from_source_to_cible("./DATALAKE/0_SOURCE_WEB", "*INFO-SOC*.html", "./DATALAKE/1_LANDING_ZONE/GLASSDOOR/SOC")
+copy_files_from_source_to_cible("./DATALAKE/0_SOURCE_WEB", "*AVIS-SOC*.html", "./DATALAKE/1_LANDING_ZONE/GLASSDOOR/AVI")

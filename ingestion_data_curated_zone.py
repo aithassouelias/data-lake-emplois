@@ -260,7 +260,7 @@ Utilisation des fonctions d'extraction pour lire les fichiers HTML dans la curat
 """
 
 # Lecture des métadonnées techniques pour obtenir la liste des fichiers cibles
-metadonnees_techniques = "C:/TD_DATALAKE/DATALAKE/00_METADATA/metadata_technique.csv"
+metadonnees_techniques = "./DATALAKE/00_METADATA/metadata_technique.csv"
 
 # Chargement des métadonnées techniques dans un DataFrame pandas pour récupérer les fichiers cibles
 df_metadata_techniques= pd.read_csv(metadonnees_techniques, sep=';', encoding='utf-8')
