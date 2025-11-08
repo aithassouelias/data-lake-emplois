@@ -81,6 +81,129 @@ def extraire_note_moy_entreprise_AVI(objet_html):
         print(f"Erreur lors de l'extraction de la note moyenne: {str(e)}")
         return 'NULL'
 
+#==============================================================================
+#-- GLASSDOOR (AVIS) : Fonction renvoyant sous forme d'une liste les avis
+#                      des employés contenu dans la page web des avis société
+#==============================================================================
+
+# def extraire_liste_avis_employes_sur_entreprise_AVI(objet_html):
+def extraire_liste_avis_employes_sur_entreprise_AVI(objet_parser_html):
+    #------------------------------------------------------------------------------
+    # Traitement de sortie si pas de page trouvee a l Url
+    #------------------------------------------------------------------------------
+    texte_tmp = objet_parser_html.find_all('li', attrs = {'class':'empReview'})
+    # for i in (texte_tmp): print(i,'\n\n')
+    
+    if (texte_tmp == []) : 
+        # pass
+        print("NULL")
+    else:
+        liste_de_page_web=[[]]
+    #    print(liste_de_page_web)
+    
+        #------------------------------------------------------------------------------
+        # Traitement de chaque fiche avis saisie sur la page web
+        #------------------------------------------------------------------------------
+        for x in range(0, len(texte_tmp)) :
+            # print("Avis : " + str(x+1))
+            #--------------------------------------------------------------------------
+            #-- 0 - ID de l'avis (arbitraire) incremental
+            #--------------------------------------------------------------------------
+            if x == 0: 
+                liste_de_page_web[0] = ['"0"']
+            else:
+                liste_de_page_web.append(['"'+str(x)+'"'])
+                # print("Avis n° : " + str(x+1) )
+
+            #--------------------------------------------------------------------------
+            #-- On recupere par une boucle les donnees XML de chaque avis
+            #--------------------------------------------------------------------------
+            objet_html_2 = BeautifulSoup(str(texte_tmp[x]), 'html.parser')
+            # print(objet_html_2)
+        
+            #--------------------------------------------------------------------------
+            #-- 2 - Date Time 
+            #--------------------------------------------------------------------------
+            # texte_tmp = donner_datetime_actuel()
+            # liste_de_page_web[x].append('"' + texte_tmp + '"')
+        
+            #--------------------------------------------------------------------------
+            #-- 3 - Titre de l'avis de l'employe sur la societe (review)
+            #--------------------------------------------------------------------------
+            # texte_tmp = extraire_review_titre ('GLASSDOOR', objet_html_2 )
+            # liste_de_page_web[x].append('"' + texte_tmp + '"')
+        
+            #--------------------------------------------------------------------------
+            #-- 5 - Employe actuel
+            #--------------------------------------------------------------------------
+            texte_html_trouve = objet_html_2.find_all('span', attrs = {'class':'authorJobTitle middle reviewer'})
+            if (texte_html_trouve == []) :        
+                liste_de_page_web[x].append('NULL')
+            else :
+                texte_tmp_2 = re.sub(r'<span (.*)">(.*)</span>(.*)', r'\2', str(texte_html_trouve[0]))
+                # print(texte_tmp_2)
+                liste_de_page_web[x].append('"' + texte_tmp_2 + '"')
+        
+            #--------------------------------------------------------------------------
+            #-- 6 - Ville de l'employe 
+            #--------------------------------------------------------------------------
+            texte_html_trouve = objet_html_2.find_all('span', attrs = {'class':'authorLocation'}) 
+            if (texte_html_trouve == []) :
+                liste_de_page_web[x].append('NULL')
+            else :
+                texte_tmp_2 = re.sub(r'<span (.*)">(.*)</span>(.*)', r'\2', str(texte_html_trouve[0]))
+                # print(texte_tmp_2)
+                liste_de_page_web[x].append('"' + texte_tmp_2 + '"')
+        
+            #--------------------------------------------------------------------------
+            #-- 7 - Commentaire texte libre employe sur entreprise
+            #--------------------------------------------------------------------------
+            texte_html_trouve= objet_html_2.find_all('p', attrs = {'class':'mainText mb-0'}) 
+        
+            if (texte_html_trouve == []) :        
+                liste_de_page_web[x].append('NULL')
+            else :
+                texte_tmp_2 = texte_html_trouve[0].text
+                # print(texte_tmp_2)
+                liste_de_page_web[x].append('"' + texte_tmp_2 + '"')
+    
+            #--------------------------------------------------------------------------
+            #-- 8 - Avantages
+            #--------------------------------------------------------------------------
+            texte_html_trouve = objet_html_2.find_all('div', attrs={'class': 'mt-md common__EiReviewTextStyles__allowLineBreaks'})
+
+            if not texte_html_trouve:
+                liste_de_page_web[x].append('NULL')
+            else:
+                # On récupère tous les <p> dans le premier div trouvé
+                p_elements = texte_html_trouve[0].find_all('p')
+                
+                if len(p_elements) > 1:
+                    texte_tmp_2 = p_elements[1].get_text(strip=True)  # le contenu de l’avantage
+                else:
+                    texte_tmp_2 = 'NULL'
+                
+                liste_de_page_web[x].append('"' + texte_tmp_2 + '"')
+    
+            #--------------------------------------------------------------------------
+            #-- 9 - Inconvénients
+            #--------------------------------------------------------------------------
+            texte_html_trouve= objet_html_2.find_all('div', attrs = {'class':'mt-md common__EiReviewTextStyles__allowLineBreaks'}) 
+
+            if not texte_html_trouve:
+                liste_de_page_web[x].append('NULL')
+            else:
+                # On récupère tous les <p> dans le premier div trouvé
+                p_elements = texte_html_trouve[1].find_all('p')
+                
+                if len(p_elements) > 1:
+                    texte_tmp_2 = p_elements[1].get_text(strip=True)  # le contenu de l’avantage
+                else:
+                    texte_tmp_2 = 'NULL'
+                
+                liste_de_page_web[x].append('"' + texte_tmp_2 + '"')
+
+    return(liste_de_page_web) 
 
 #======================================================================================
 #-- GLASSDOOR (SOC) : Fonctions renvoyant nom de l'entreprise, ville, taille, secteur
@@ -334,6 +457,7 @@ print("Secteur de l'entreprise extraite : ", liste_secteur_entreprise)
 ############################################################################
 liste_entreprise_avis = []
 liste_note_moy_entreprise = []
+liste_avis = []
 
 for fichier_html in fichiers_glassdoor_societe_avis:
     # Ouvrir le fichier HTML
@@ -349,9 +473,13 @@ for fichier_html in fichiers_glassdoor_societe_avis:
     liste_entreprise_avis.append(nom_entreprise_avi)
     note_moy_entreprise_avi = extraire_note_moy_entreprise_AVI(soup)
     liste_note_moy_entreprise.append(note_moy_entreprise_avi)
+    # Extraction des avis des employés sur l'entreprise
+    avis_employes = extraire_liste_avis_employes_sur_entreprise_AVI(soup)
+    liste_avis.append(avis_employes)
 
 print("Nom de l'entreprise extraite (AVIS) : ", liste_entreprise_avis)
 print("Note moyenne de l'entreprise extraite (AVIS) : ", liste_note_moy_entreprise)
+print("Liste des avis des employés sur l'entreprise extraite (AVIS) : ", liste_avis)
 
 #############################################################################
 # Parcours des fichiers HTML d'informations sur les offres d'emplois LinkedIn
@@ -391,8 +519,8 @@ for fichier_html in fichiers_linkedin_emp_info:
     niveau_hierarchique_emploi = extraire_niveau_hierarchique_emploi_EMP(soup)
     liste_niveau_hierarchique_emploi.append(niveau_hierarchique_emploi)
 
-print("Libellé des emplois extraits : ", liste_libelle_emploi)
-print("Nom de l'entreprise extraite (EMP) : ", liste_entreprise_emp)
-print("Ville des emplois extraits : ", liste_ville_emploi)
+#print("Libellé des emplois extraits : ", liste_libelle_emploi)
+#print("Nom de l'entreprise extraite (EMP) : ", liste_entreprise_emp)
+#print("Ville des emplois extraits : ", liste_ville_emploi)
 #print("Texte des emplois extraits : ", liste_texte_emploi)
-print("Niveau hiérarchique des emplois extraits : ", liste_niveau_hierarchique_emploi)
+#print("Niveau hiérarchique des emplois extraits : ", liste_niveau_hierarchique_emploi)
