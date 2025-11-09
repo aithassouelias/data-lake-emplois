@@ -16,6 +16,7 @@ import pandas as pd
 import fnmatch
 import os
 import re
+import json
 
 #==============================================================================
 #-- GLASSDOOR (AVIS) : Fonction renvoyant <Nom_entreprise>
@@ -519,8 +520,88 @@ for fichier_html in fichiers_linkedin_emp_info:
     niveau_hierarchique_emploi = extraire_niveau_hierarchique_emploi_EMP(soup)
     liste_niveau_hierarchique_emploi.append(niveau_hierarchique_emploi)
 
-#print("Libellé des emplois extraits : ", liste_libelle_emploi)
-#print("Nom de l'entreprise extraite (EMP) : ", liste_entreprise_emp)
-#print("Ville des emplois extraits : ", liste_ville_emploi)
-#print("Texte des emplois extraits : ", liste_texte_emploi)
-#print("Niveau hiérarchique des emplois extraits : ", liste_niveau_hierarchique_emploi)
+print("Libellé des emplois extraits : ", liste_libelle_emploi)
+print("Nom de l'entreprise extraite (EMP) : ", liste_entreprise_emp)
+print("Ville des emplois extraits : ", liste_ville_emploi)
+print("Texte des emplois extraits : ", liste_texte_emploi)
+print("Niveau hiérarchique des emplois extraits : ", liste_niveau_hierarchique_emploi)
+
+
+donnees_finales = []
+objet_id = 1
+
+# ======================================================================
+# GLASSDOOR SOC (informations sur les sociétés)
+# ======================================================================
+for i in range(len(liste_entreprise)):
+    donnees_finales.extend([
+        {'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'GLASSDOOR_SOC', 'colonne': 'nom_entreprise', 'valeur': liste_entreprise[i]},
+        {'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'GLASSDOOR_SOC', 'colonne': 'ville', 'valeur': liste_ville_entreprise[i]},
+        {'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'GLASSDOOR_SOC', 'colonne': 'taille', 'valeur': liste_taille_entreprise[i]},
+        {'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'GLASSDOOR_SOC', 'colonne': 'secteur', 'valeur': liste_secteur_entreprise[i]},
+    ])
+    objet_id += 1
+
+
+# ======================================================================
+# LINKEDIN EMP (offres d'emploi)
+# ======================================================================
+for i in range(len(liste_libelle_emploi)):
+    donnees_finales.extend([
+        {'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'LINKEDIN_EMP', 'colonne': 'libelle_emploi', 'valeur': liste_libelle_emploi[i]},
+        {'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'LINKEDIN_EMP', 'colonne': 'entreprise', 'valeur': liste_entreprise_emp[i]},
+        {'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'LINKEDIN_EMP', 'colonne': 'ville', 'valeur': liste_ville_emploi[i]},
+        {'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'LINKEDIN_EMP', 'colonne': 'texte', 'valeur': liste_texte_emploi[i]},
+    ])
+    objet_id += 1
+
+
+# ======================================================================
+# GLASSDOOR AVIS (avis employés)
+# ======================================================================
+for i in range(len(liste_entreprise_avis)):
+    nom = liste_entreprise_avis[i]
+    note = liste_note_moy_entreprise[i]
+    avis_list = liste_avis[i]
+
+    # Construire un objet JSON regroupant tous les avis
+    avis_json = {}
+    if avis_list:
+        for j, avis in enumerate(avis_list, start=1):
+            texte_avis = avis[3] if len(avis) > 3 else 'NULL'
+            avantages = avis[4] if len(avis) > 4 else 'NULL'
+            inconvenients = avis[5] if len(avis) > 5 else 'NULL'
+            avis_json[f'avis_{j}'] = {
+                'texte_avis': texte_avis,
+                'avantages': avantages,
+                'inconvenients': inconvenients
+            }
+
+    # Convertir en texte JSON
+    avis_json_str = json.dumps(avis_json, ensure_ascii=False)
+
+    # Ajouter les lignes
+    donnees_finales.append({'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'GLASSDOOR_AVIS', 'colonne': 'nom_entreprise', 'valeur': nom})
+    donnees_finales.append({'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'GLASSDOOR_AVIS', 'colonne': 'note_moy_entreprise', 'valeur': note})
+    donnees_finales.append({'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'GLASSDOOR_AVIS', 'colonne': 'avis', 'valeur': avis_json_str})
+
+    objet_id += 1
+
+
+# ======================================================================
+# Création du DataFrame final
+# ======================================================================
+df_final = pd.DataFrame(donnees_finales, columns=['OBJECT_ID', 'TYPE_FICHIER', 'colonne', 'valeur'])
+
+# Sauvegarde du DataFrame dans un fichier CSV
+df_final.to_csv(
+    './DATALAKE/00_METADATA/metadata_descriptives.csv',
+    sep=';',
+    index=False,
+    encoding='utf-8',
+    quoting=csv.QUOTE_NONE,
+    escapechar='\\'  # nécessaire pour éviter les erreurs sur les retours à la ligne
+)
+
+print("✅ Fichier de métadonnées descriptives créé")
+
