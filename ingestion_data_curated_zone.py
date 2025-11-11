@@ -120,6 +120,13 @@ def extraire_liste_avis_employes_sur_entreprise_AVI(objet_parser_html):
                 date_text = 'NULL'
             liste_de_page_web[x].append('"' + date_text + '"')
 
+            note_tag = objet_html_2.find('span', class_='value-title')
+            if note_tag and note_tag.has_attr('title'):
+                note_avis = note_tag['title']
+            else:
+                note_avis = 'NULL'
+            liste_de_page_web[x].append('"' + note_avis + '"')
+
             #----------------------------------------------------------------------
             #-- 5 - Employé actuel
             #----------------------------------------------------------------------
@@ -573,12 +580,14 @@ for i in range(len(liste_entreprise_avis)):
     if avis_list:
         for j, avis in enumerate(avis_list, start=1):
             date_avis = avis[1] if len(avis) > 1 else 'NULL'
-            texte_avis = avis[4] if len(avis) > 4 else 'NULL'
-            avantages = avis[5] if len(avis) > 5 else 'NULL'
-            inconvenients = avis[6] if len(avis) > 6 else 'NULL'
+            note_avis = avis[2] if len(avis) > 2 else 'NULL'
+            texte_avis = avis[5] if len(avis) > 5 else 'NULL'
+            avantages = avis[6] if len(avis) > 6 else 'NULL'
+            inconvenients = avis[7] if len(avis) > 7 else 'NULL'
 
             avis_json[f'avis_{j}'] = {
                 'date_avis': date_avis.replace('"', ''),
+                'note_avis': note_avis.replace('"', ''),
                 'texte_avis': texte_avis.replace('"', ''),
                 'avantages': avantages.replace('"', ''),
                 'inconvenients': inconvenients.replace('"', '')
