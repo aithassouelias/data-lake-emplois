@@ -379,6 +379,21 @@ def extraire_niveau_hierarchique_emploi_EMP (objet_html):
             resultat = texte_tmp
     return(resultat)
 
+def extraire_date_posted_EMP(soup):
+    try:
+        # Trouver la balise <script> contenant le JSON-LD
+        script_tag = soup.find('script', type='application/ld+json')
+        if script_tag:
+            # Charger le contenu JSON
+            data = json.loads(script_tag.string)
+            # Récupérer la clé "datePosted" si elle existe
+            return data.get('datePosted', 'NULL')
+        else:
+            return 'NULL'
+    except Exception as e:
+        print("Erreur lors de l'extraction de la date :", e)
+        return 'NULL'
+
 """
 Utilisation des fonctions d'extraction pour lire les fichiers HTML dans la curated zone
 """
@@ -422,6 +437,7 @@ liste_ville_entreprise = []
 liste_taille_entreprise = []
 liste_secteur_entreprise = []
 
+
 for fichier_html in fichiers_glassdoor_societe_info:
     # Ouvrir le fichier HTML
     objet_fichier_html = open(fichier_html, "r", encoding="utf8")
@@ -446,6 +462,8 @@ for fichier_html in fichiers_glassdoor_societe_info:
     #extraction des secteurs des entreprises
     secteur_entreprise = extraire_secteur_entreprise_SOC(soup)
     liste_secteur_entreprise.append(secteur_entreprise)
+
+    
 
 print("Nom de l'entreprise extraite : ", liste_entreprise)
 print("Ville de l'entreprise extraite : ", liste_ville_entreprise)
@@ -490,6 +508,7 @@ liste_entreprise_emp = []
 liste_ville_emploi = []
 liste_texte_emploi = []
 liste_niveau_hierarchique_emploi = []
+liste_date_posted = []
 
 for fichier_html in fichiers_linkedin_emp_info:
     # Ouvrir le fichier HTML
@@ -519,6 +538,10 @@ for fichier_html in fichiers_linkedin_emp_info:
     # Extraction des niveaux hiérarchiques des emplois
     niveau_hierarchique_emploi = extraire_niveau_hierarchique_emploi_EMP(soup)
     liste_niveau_hierarchique_emploi.append(niveau_hierarchique_emploi)
+
+    #extraction des dates posted des emplois
+    date_posted = extraire_date_posted_EMP(soup)
+    liste_date_posted.append(date_posted)
 
 print("Libellé des emplois extraits : ", liste_libelle_emploi)
 print("Nom de l'entreprise extraite (EMP) : ", liste_entreprise_emp)
@@ -552,6 +575,9 @@ for i in range(len(liste_libelle_emploi)):
         {'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'LINKEDIN_EMP', 'colonne': 'entreprise', 'valeur': liste_entreprise_emp[i]},
         {'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'LINKEDIN_EMP', 'colonne': 'ville', 'valeur': liste_ville_emploi[i]},
         {'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'LINKEDIN_EMP', 'colonne': 'texte', 'valeur': liste_texte_emploi[i]},
+        {'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'LINKEDIN_EMP', 'colonne': 'niveau_hierarchique', 'valeur': liste_niveau_hierarchique_emploi[i]},
+        {'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'LINKEDIN_EMP', 'colonne': 'date_posted', 'valeur': liste_date_posted[i]},
+
     ])
     objet_id += 1
 
