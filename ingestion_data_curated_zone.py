@@ -87,124 +87,98 @@ def extraire_note_moy_entreprise_AVI(objet_html):
 #                      des employés contenu dans la page web des avis société
 #==============================================================================
 
-# def extraire_liste_avis_employes_sur_entreprise_AVI(objet_html):
 def extraire_liste_avis_employes_sur_entreprise_AVI(objet_parser_html):
     #------------------------------------------------------------------------------
-    # Traitement de sortie si pas de page trouvee a l Url
+    # Traitement de sortie si pas de page trouvee à l’URL
     #------------------------------------------------------------------------------
-    texte_tmp = objet_parser_html.find_all('li', attrs = {'class':'empReview'})
-    # for i in (texte_tmp): print(i,'\n\n')
+    texte_tmp = objet_parser_html.find_all('li', attrs={'class': 'empReview'})
     
-    if (texte_tmp == []) : 
-        # pass
+    if not texte_tmp:
         print("NULL")
+        return []
     else:
-        liste_de_page_web=[[]]
-    #    print(liste_de_page_web)
-    
+        liste_de_page_web = [[]]
+
         #------------------------------------------------------------------------------
-        # Traitement de chaque fiche avis saisie sur la page web
+        # Traitement de chaque fiche avis sur la page web
         #------------------------------------------------------------------------------
-        for x in range(0, len(texte_tmp)) :
-            # print("Avis : " + str(x+1))
-            #--------------------------------------------------------------------------
-            #-- 0 - ID de l'avis (arbitraire) incremental
-            #--------------------------------------------------------------------------
-            if x == 0: 
+        for x in range(len(texte_tmp)):
+            if x == 0:
                 liste_de_page_web[0] = ['"0"']
             else:
                 liste_de_page_web.append(['"'+str(x)+'"'])
-                # print("Avis n° : " + str(x+1) )
 
-            #--------------------------------------------------------------------------
-            #-- On recupere par une boucle les donnees XML de chaque avis
-            #--------------------------------------------------------------------------
             objet_html_2 = BeautifulSoup(str(texte_tmp[x]), 'html.parser')
-            # print(objet_html_2)
-        
-            #--------------------------------------------------------------------------
-            #-- 2 - Date Time 
-            #--------------------------------------------------------------------------
-            # texte_tmp = donner_datetime_actuel()
-            # liste_de_page_web[x].append('"' + texte_tmp + '"')
-        
-            #--------------------------------------------------------------------------
-            #-- 3 - Titre de l'avis de l'employe sur la societe (review)
-            #--------------------------------------------------------------------------
-            # texte_tmp = extraire_review_titre ('GLASSDOOR', objet_html_2 )
-            # liste_de_page_web[x].append('"' + texte_tmp + '"')
-        
-            #--------------------------------------------------------------------------
-            #-- 5 - Employe actuel
-            #--------------------------------------------------------------------------
-            texte_html_trouve = objet_html_2.find_all('span', attrs = {'class':'authorJobTitle middle reviewer'})
-            if (texte_html_trouve == []) :        
+
+            #----------------------------------------------------------------------
+            #-- 2 - Date de l’avis
+            #----------------------------------------------------------------------
+            time_tag = objet_html_2.find('time', class_='date subtle small')
+            if time_tag:
+                date_text = time_tag.get_text(strip=True) 
+            else:
+                date_text = 'NULL'
+            liste_de_page_web[x].append('"' + date_text + '"')
+
+            #----------------------------------------------------------------------
+            #-- 5 - Employé actuel
+            #----------------------------------------------------------------------
+            texte_html_trouve = objet_html_2.find_all('span', attrs={'class': 'authorJobTitle middle reviewer'})
+            if not texte_html_trouve:
                 liste_de_page_web[x].append('NULL')
-            else :
+            else:
                 texte_tmp_2 = re.sub(r'<span (.*)">(.*)</span>(.*)', r'\2', str(texte_html_trouve[0]))
-                # print(texte_tmp_2)
                 liste_de_page_web[x].append('"' + texte_tmp_2 + '"')
-        
-            #--------------------------------------------------------------------------
-            #-- 6 - Ville de l'employe 
-            #--------------------------------------------------------------------------
-            texte_html_trouve = objet_html_2.find_all('span', attrs = {'class':'authorLocation'}) 
-            if (texte_html_trouve == []) :
+
+            #----------------------------------------------------------------------
+            #-- 6 - Ville de l’employé 
+            #----------------------------------------------------------------------
+            texte_html_trouve = objet_html_2.find_all('span', attrs={'class': 'authorLocation'}) 
+            if not texte_html_trouve:
                 liste_de_page_web[x].append('NULL')
-            else :
+            else:
                 texte_tmp_2 = re.sub(r'<span (.*)">(.*)</span>(.*)', r'\2', str(texte_html_trouve[0]))
-                # print(texte_tmp_2)
                 liste_de_page_web[x].append('"' + texte_tmp_2 + '"')
-        
-            #--------------------------------------------------------------------------
-            #-- 7 - Commentaire texte libre employe sur entreprise
-            #--------------------------------------------------------------------------
-            texte_html_trouve= objet_html_2.find_all('p', attrs = {'class':'mainText mb-0'}) 
-        
-            if (texte_html_trouve == []) :        
+
+            #----------------------------------------------------------------------
+            #-- 7 - Commentaire texte libre employé sur entreprise
+            #----------------------------------------------------------------------
+            texte_html_trouve = objet_html_2.find_all('p', attrs={'class': 'mainText mb-0'}) 
+            if not texte_html_trouve:
                 liste_de_page_web[x].append('NULL')
-            else :
-                texte_tmp_2 = texte_html_trouve[0].text
-                # print(texte_tmp_2)
+            else:
+                texte_tmp_2 = texte_html_trouve[0].text.strip()
                 liste_de_page_web[x].append('"' + texte_tmp_2 + '"')
-    
-            #--------------------------------------------------------------------------
+
+            #----------------------------------------------------------------------
             #-- 8 - Avantages
-            #--------------------------------------------------------------------------
+            #----------------------------------------------------------------------
             texte_html_trouve = objet_html_2.find_all('div', attrs={'class': 'mt-md common__EiReviewTextStyles__allowLineBreaks'})
-
             if not texte_html_trouve:
                 liste_de_page_web[x].append('NULL')
             else:
-                # On récupère tous les <p> dans le premier div trouvé
                 p_elements = texte_html_trouve[0].find_all('p')
-                
                 if len(p_elements) > 1:
-                    texte_tmp_2 = p_elements[1].get_text(strip=True)  # le contenu de l’avantage
+                    texte_tmp_2 = p_elements[1].get_text(strip=True)
                 else:
                     texte_tmp_2 = 'NULL'
-                
                 liste_de_page_web[x].append('"' + texte_tmp_2 + '"')
-    
-            #--------------------------------------------------------------------------
+
+            #----------------------------------------------------------------------
             #-- 9 - Inconvénients
-            #--------------------------------------------------------------------------
-            texte_html_trouve= objet_html_2.find_all('div', attrs = {'class':'mt-md common__EiReviewTextStyles__allowLineBreaks'}) 
-
-            if not texte_html_trouve:
-                liste_de_page_web[x].append('NULL')
-            else:
-                # On récupère tous les <p> dans le premier div trouvé
+            #----------------------------------------------------------------------
+            if len(texte_html_trouve) > 1:
                 p_elements = texte_html_trouve[1].find_all('p')
-                
                 if len(p_elements) > 1:
-                    texte_tmp_2 = p_elements[1].get_text(strip=True)  # le contenu de l’avantage
+                    texte_tmp_2 = p_elements[1].get_text(strip=True)
                 else:
                     texte_tmp_2 = 'NULL'
-                
                 liste_de_page_web[x].append('"' + texte_tmp_2 + '"')
+            else:
+                liste_de_page_web[x].append('NULL')
 
-    return(liste_de_page_web) 
+    return liste_de_page_web
+
 
 #======================================================================================
 #-- GLASSDOOR (SOC) : Fonctions renvoyant nom de l'entreprise, ville, taille, secteur
@@ -465,10 +439,10 @@ for fichier_html in fichiers_glassdoor_societe_info:
 
     
 
-print("Nom de l'entreprise extraite : ", liste_entreprise)
-print("Ville de l'entreprise extraite : ", liste_ville_entreprise)
-print("Taille de l'entreprise extraite : ", liste_taille_entreprise)
-print("Secteur de l'entreprise extraite : ", liste_secteur_entreprise)
+#print("Nom de l'entreprise extraite : ", liste_entreprise)
+#print("Ville de l'entreprise extraite : ", liste_ville_entreprise)
+#print("Taille de l'entreprise extraite : ", liste_taille_entreprise)
+#print("Secteur de l'entreprise extraite : ", liste_secteur_entreprise)
 
 
 ############################################################################
@@ -492,13 +466,14 @@ for fichier_html in fichiers_glassdoor_societe_avis:
     liste_entreprise_avis.append(nom_entreprise_avi)
     note_moy_entreprise_avi = extraire_note_moy_entreprise_AVI(soup)
     liste_note_moy_entreprise.append(note_moy_entreprise_avi)
+
     # Extraction des avis des employés sur l'entreprise
     avis_employes = extraire_liste_avis_employes_sur_entreprise_AVI(soup)
     liste_avis.append(avis_employes)
 
-print("Nom de l'entreprise extraite (AVIS) : ", liste_entreprise_avis)
-print("Note moyenne de l'entreprise extraite (AVIS) : ", liste_note_moy_entreprise)
-print("Liste des avis des employés sur l'entreprise extraite (AVIS) : ", liste_avis)
+#print("Nom de l'entreprise extraite (AVIS) : ", liste_entreprise_avis)
+#print("Note moyenne de l'entreprise extraite (AVIS) : ", liste_note_moy_entreprise)
+#print("Liste des avis des employés sur l'entreprise extraite (AVIS) : ", liste_avis)
 
 #############################################################################
 # Parcours des fichiers HTML d'informations sur les offres d'emplois LinkedIn
@@ -543,12 +518,16 @@ for fichier_html in fichiers_linkedin_emp_info:
     date_posted = extraire_date_posted_EMP(soup)
     liste_date_posted.append(date_posted)
 
-print("Libellé des emplois extraits : ", liste_libelle_emploi)
-print("Nom de l'entreprise extraite (EMP) : ", liste_entreprise_emp)
-print("Ville des emplois extraits : ", liste_ville_emploi)
-print("Texte des emplois extraits : ", liste_texte_emploi)
-print("Niveau hiérarchique des emplois extraits : ", liste_niveau_hierarchique_emploi)
+#print("Libellé des emplois extraits : ", liste_libelle_emploi)
+#print("Nom de l'entreprise extraite (EMP) : ", liste_entreprise_emp)
+#print("Ville des emplois extraits : ", liste_ville_emploi)
+#print("Texte des emplois extraits : ", liste_texte_emploi)
+#print("Niveau hiérarchique des emplois extraits : ", liste_niveau_hierarchique_emploi)
 
+
+#======================================================================================
+#-- Création du fichier de métadonnées descriptives
+#======================================================================================
 
 donnees_finales = []
 objet_id = 1
@@ -590,33 +569,29 @@ for i in range(len(liste_entreprise_avis)):
     note = liste_note_moy_entreprise[i]
     avis_list = liste_avis[i]
 
-    # Construire un objet JSON regroupant tous les avis
     avis_json = {}
     if avis_list:
         for j, avis in enumerate(avis_list, start=1):
-            texte_avis = avis[3] if len(avis) > 3 else 'NULL'
-            avantages = avis[4] if len(avis) > 4 else 'NULL'
-            inconvenients = avis[5] if len(avis) > 5 else 'NULL'
+            date_avis = avis[1] if len(avis) > 1 else 'NULL'
+            texte_avis = avis[4] if len(avis) > 4 else 'NULL'
+            avantages = avis[5] if len(avis) > 5 else 'NULL'
+            inconvenients = avis[6] if len(avis) > 6 else 'NULL'
+
             avis_json[f'avis_{j}'] = {
-                'texte_avis': texte_avis,
-                'avantages': avantages,
-                'inconvenients': inconvenients
+                'date_avis': date_avis.replace('"', ''),
+                'texte_avis': texte_avis.replace('"', ''),
+                'avantages': avantages.replace('"', ''),
+                'inconvenients': inconvenients.replace('"', '')
             }
 
-    # Convertir en texte JSON
     avis_json_str = json.dumps(avis_json, ensure_ascii=False)
 
-    # Ajouter les lignes
     donnees_finales.append({'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'GLASSDOOR_AVIS', 'colonne': 'nom_entreprise', 'valeur': nom})
     donnees_finales.append({'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'GLASSDOOR_AVIS', 'colonne': 'note_moy_entreprise', 'valeur': note})
     donnees_finales.append({'OBJECT_ID': objet_id, 'TYPE_FICHIER': 'GLASSDOOR_AVIS', 'colonne': 'avis', 'valeur': avis_json_str})
 
     objet_id += 1
 
-
-# ======================================================================
-# Création du DataFrame final
-# ======================================================================
 df_final = pd.DataFrame(donnees_finales, columns=['OBJECT_ID', 'TYPE_FICHIER', 'colonne', 'valeur'])
 
 # Sauvegarde du DataFrame dans un fichier CSV
