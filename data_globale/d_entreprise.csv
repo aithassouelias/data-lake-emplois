@@ -1,0 +1,263 @@
+id_entreprise,id_secteur,nom_entreprise,taille
+1,1.0,Devoteam,De 1 001 à 5 000 employés
+2,2.0,CEGID,De 1 001 à 5 000 employés
+3,1.0,Astek,De 1 001 à 5 000 employés
+4,3.0,Astek Group,De 1 à 50 employés
+5,1.0,Keyrus Group,De 1 001 à 5 000 employés
+6,4.0,Yongzhi Plastic Electronics (Shenzhen) Co.,Entre 201 et 500 employés
+7,5.0,Thales,Plus de 10 000 employés
+8,6.0,Thales-Raytheon Systems,De 501 à 1 000 employés
+9,7.0,L&T Thales Technology Services,Inconnu
+10,1.0,JEMS Group,Entre 201 et 500 employés
+11,2.0,Capgemini,Plus de 10 000 employés
+12,8.0,Capgemini Invent,De 5 001 à 10 000 employés
+13,9.0,Bayer,Plus de 10 000 employés
+14,10.0,Open,De 1 001 à 5 000 employés
+15,11.0,Open Minds Open Hearts Day Care,De 1 à 50 employés
+16,2.0,OpenText,Plus de 10 000 employés
+17,12.0,Open Sourcing,De 1 à 50 employés
+18,13.0,Artefact,De 501 à 1 000 employés
+19,13.0,Artefact Group,De 51 à 200 employés
+20,11.0,Artefacts Studio,De 1 à 50 employés
+21,11.0,Openfield Live,De 1 à 50 employés
+22,12.0,Phaidon International,De 501 à 1 000 employés
+23,13.0,D2SI,De 51 à 200 employés
+24,13.0,Abaka,De 1 à 50 employés
+25,11.0,Adthink-Media,De 51 à 200 employés
+26,4.0,SKF,Plus de 10 000 employés
+27,14.0,GFI,De 51 à 200 employés
+28,1.0,Gfi Informatique,Plus de 10 000 employés
+29,15.0,GFI Software,De 51 à 200 employés
+30,16.0,GFI Group,De 1 001 à 5 000 employés
+31,2.0,ACCEO Solutions,De 501 à 1 000 employés
+32,1.0,Expertime,De 51 à 200 employés
+33,17.0,Accor,Plus de 10 000 employés
+34,18.0,ibis,Plus de 10 000 employés
+35,19.0,La Redoute,De 1 001 à 5 000 employés
+36,11.0,LA REDOUTE,Inconnu
+37,20.0,Veolia,Plus de 10 000 employés
+38,18.0,OTV,Plus de 10 000 employés
+39,7.0,Veolia Water Tech,Inconnu
+40,11.0,Groupe NICOLLIN - Groupe VEOLIA,Inconnu
+41,11.0,Adsearch,De 51 à 200 employés
+42,6.0,Transdev,Plus de 10 000 employés
+43,,,
+44,12.0,Groupe Adéquat,De 501 à 1 000 employés
+45,11.0,Multimedia France Productions,De 51 à 200 employés
+46,18.0,Modis,De 5 001 à 10 000 employés
+47,21.0,UK Ministry of Defence,Plus de 10 000 employés
+48,1.0,Smile Group,De 1 001 à 5 000 employés
+49,1.0,Atos,Plus de 10 000 employés
+50,15.0,Cegedim,De 1 001 à 5 000 employés
+51,10.0,Groupe Creative,Entre 201 et 500 employés
+52,12.0,Robert Half,Plus de 10 000 employés
+53,22.0,Lacoste,De 5 001 à 10 000 employés
+54,11.0,Lacoste Traiteur,De 51 à 200 employés
+55,23.0,CGIAR,De 5 001 à 10 000 employés
+56,24.0,Volvo Group,Plus de 10 000 employés
+57,24.0,Volvo Trucks,De 1 001 à 5 000 employés
+58,4.0,Volvo Cars,Plus de 10 000 employés
+59,4.0,Volvo Construction Equipment,Entre 201 et 500 employés
+60,25.0,Atos,Entre 201 et 500 employés
+61,26.0,Volvo Information Technology,Inconnu
+62,27.0,Feu Vert,De 1 001 à 5 000 employés
+63,28.0,SeLoger,De 501 à 1 000 employés
+64,4.0,CNH Industrial,Plus de 10 000 employés
+65,29.0,CNH Industrial Capital,Entre 201 et 500 employés
+66,11.0,SOTRAVO Filiale SOLOCAL GROUP,Inconnu
+67,30.0,SoLocal Group,De 1 001 à 5 000 employés
+68,11.0,Morgan Philips Group,De 51 à 200 employés
+69,12.0,Morgan Philips Executive Search,Entre 201 et 500 employés
+70,12.0,Montreal Associates,De 51 à 200 employés
+71,,Devoteam,
+72,,Atos,
+73,11.0,Atos Consulting,De 1 001 à 5 000 employés
+74,31.0,STM,De 5 001 à 10 000 employés
+75,,Atos Consulting,
+76,,Atos-Syntel,
+77,,Atos Medical,
+78,,Dassault Systemes,
+79,,SolidWorks,
+80,,2S2I Solutions & Services,
+81,,CEGID,
+82,,Bayer,
+83,32.0,Polytechnique Montréal,De 1 001 à 5 000 employés
+84,,Abaka,
+85,,Expertime,
+86,,Adsearch,
+87,,Groupe Adéquat,
+88,,Multimedia France Productions,
+89,,Modis,
+90,33.0,BMO Financial Group,Plus de 10 000 employés
+91,,UK Ministry of Defence,
+92,,Smile Group,
+93,,Cegedim,
+94,,Groupe Creative,
+95,,Robert Half,
+96,,Lacoste,
+97,32.0,Concordia University,De 5 001 à 10 000 employés
+98,,Lacoste Traiteur,
+99,,CGIAR,
+100,,Volvo Group,
+101,,Volvo Trucks,
+102,,Volvo Cars,
+103,,Volvo Construction Equipment,
+104,,Volvo Information Technology,
+105,,Feu Vert,
+106,32.0,University of Montreal,De 5 001 à 10 000 employés
+107,,SeLoger,
+108,,CNH Industrial,
+109,,CNH Industrial Capital,
+110,,SOTRAVO Filiale SOLOCAL GROUP,
+111,,SoLocal Group,
+112,,Morgan Philips Group,
+113,34.0,CRIM (Computer Research Institute of Montreal),Inconnu
+114,,Morgan Philips Executive Search,
+115,,Montreal Associates,
+116,,STM,
+117,,Polytechnique Montréal,
+118,,BMO Financial Group,
+119,,Concordia University,
+120,,University of Montreal,
+121,14.0,Eidos Montreal,Entre 201 et 500 employés
+122,,CRIM (Computer Research Institute of Montreal),
+123,,Eidos Montreal,
+124,,Softeam,
+125,,NVIDIA,
+126,,ALTRAN,
+127,,ALTRAD Group,
+128,,Altran Group,
+129,15.0,Softeam,De 501 à 1 000 employés
+130,,Altran Engineering Solution,
+131,,Altran North America,
+132,,Altran Telnet,
+133,,Sephora,
+134,,LVMH,
+135,,Statkraft AS,
+136,15.0,NVIDIA,Plus de 10 000 employés
+137,,Sparklane,
+138,,Manpower,
+139,,ITS,
+140,,ITS Group,
+141,,Loria,
+142,,ITS Overlap,
+143,,Canon ITS,
+144,1.0,2S2I Solutions & Services,De 51 à 200 employés
+145,,Groupe SII,
+146,,Sii Poland,
+147,,cerema,
+148,,Paris Inn Group,
+149,,Groupe Altice Média,
+150,,CALIDA Group,
+151,1.0,Atos-Syntel,Plus de 10 000 employés
+152,11.0,ALTRAN,Inconnu
+153,,Logware,
+154,,Fortuneo SA,
+155,,Teads,
+156,11.0,ALTRAD Group,De 1 001 à 5 000 employés
+157,,Datadog,
+158,,CELINE,
+159,,Les Echos,
+160,,Kendo,
+161,,Sanofi,
+162,1.0,Altran Group,Plus de 10 000 employés
+163,,Sanofi Pasteur,
+164,,Merial,
+165,,Groupe Crédit Agricole,
+166,,Groupe Crédit Agricole du Maroc,
+167,,CACIB,
+168,,Crédit Agricole d'Ile de France,
+169,,Crédit Agricole d'Aquitaine,
+170,35.0,Altran Engineering Solution,De 501 à 1 000 employés
+171,,Crédit Agricole,
+172,,Lectra,
+173,,Sopra Steria,
+174,,Sopra Steria Recruitment,
+175,,CITECH,
+176,,Group Adaming,
+177,,Micropole,
+178,8.0,Altran North America,Plus de 10 000 employés
+179,,alptis assurances,
+180,,Plastic Omnium,
+181,,Mixt Composites Recyclables,
+182,,Astek,
+183,,Astek Group,
+184,,Keyrus Group,
+185,7.0,Altran Telnet,Inconnu
+186,,Yongzhi Plastic Electronics (Shenzhen) Co.,
+187,,Thales,
+188,,Thales-Raytheon Systems,
+189,,L&T Thales Technology Services,
+190,,JEMS Group,
+191,,Capgemini,
+192,,Capgemini Invent,
+193,35.0,Sephora,Plus de 10 000 employés
+194,,Open,
+195,,Open Minds Open Hearts Day Care,
+196,,OpenText,
+197,,Open Sourcing,
+198,,Artefact,
+199,,Artefact Group,
+200,19.0,LVMH,Plus de 10 000 employés
+201,,Artefacts Studio,
+202,,Openfield Live,
+203,,Phaidon International,
+204,,D2SI,
+205,,Adthink-Media,
+206,,SKF,
+207,,GFI,
+208,,Gfi Informatique,
+209,20.0,Statkraft AS,Entre 201 et 500 employés
+210,,GFI Software,
+211,,GFI Group,
+212,,ACCEO Solutions,
+213,2.0,Sparklane,De 1 à 50 employés
+214,,Accor,
+215,,ibis,
+216,,La Redoute,
+217,,LA REDOUTE,
+218,,Veolia,
+219,,OTV,
+220,3.0,Atos Medical,De 51 à 200 employés
+221,18.0,Manpower,De 5 001 à 10 000 employés
+222,,Veolia Water Tech,
+223,,Groupe NICOLLIN - Groupe VEOLIA,
+224,,Transdev,
+225,9.0,ITS,De 1 à 50 employés
+226,1.0,ITS Group,De 1 001 à 5 000 employés
+227,34.0,Loria,De 501 à 1 000 employés
+228,36.0,ITS Overlap,Entre 201 et 500 employés
+229,18.0,Canon ITS,Entre 201 et 500 employés
+230,1.0,Groupe SII,De 1 001 à 5 000 employés
+231,1.0,Sii Poland,De 1 001 à 5 000 employés
+232,11.0,cerema,De 1 001 à 5 000 employés
+233,11.0,Paris Inn Group,De 501 à 1 000 employés
+234,15.0,Dassault Systemes,Plus de 10 000 employés
+235,11.0,Groupe Altice Média,De 501 à 1 000 employés
+236,11.0,CALIDA Group,Inconnu
+237,13.0,Logware,Entre 201 et 500 employés
+238,33.0,Fortuneo SA,Entre 201 et 500 employés
+239,37.0,Teads,De 501 à 1 000 employés
+240,15.0,Datadog,De 1 001 à 5 000 employés
+241,38.0,CELINE,De 1 001 à 5 000 employés
+242,18.0,SolidWorks,De 501 à 1 000 employés
+243,18.0,Les Echos,Entre 201 et 500 employés
+244,18.0,Kendo,Entre 201 et 500 employés
+245,9.0,Sanofi,Plus de 10 000 employés
+246,7.0,Sanofi Pasteur,Inconnu
+247,39.0,Merial,De 1 001 à 5 000 employés
+248,40.0,Groupe Crédit Agricole,De 5 001 à 10 000 employés
+249,33.0,Groupe Crédit Agricole du Maroc,De 501 à 1 000 employés
+250,35.0,CACIB,De 5 001 à 10 000 employés
+251,11.0,Crédit Agricole d'Ile de France,De 1 001 à 5 000 employés
+252,11.0,Crédit Agricole d'Aquitaine,De 1 001 à 5 000 employés
+253,11.0,Crédit Agricole,Inconnu
+254,15.0,Lectra,De 1 001 à 5 000 employés
+255,1.0,Sopra Steria,Plus de 10 000 employés
+256,18.0,Sopra Steria Recruitment,De 51 à 200 employés
+257,1.0,CITECH,De 51 à 200 employés
+258,1.0,Group Adaming,De 501 à 1 000 employés
+259,13.0,Micropole,De 1 001 à 5 000 employés
+260,11.0,alptis assurances,Entre 201 et 500 employés
+261,41.0,Plastic Omnium,1946
+262,11.0,Mixt Composites Recyclables,Inconnu
