@@ -3,6 +3,7 @@ from pathlib import Path
 import sys
 import json
 import pandas as pd
+
 import numpy as np
 
 RACINE = Path(__file__).resolve().parents[1]
