@@ -40,6 +40,7 @@ id_entreprise,id_secteur,nom_entreprise,taille,categorie,siege_social,pays
 40,11,Groupe NICOLLIN - Groupe VEOLIA,Inconnu,Inconnu,Saint-Fons,France
 41,11,Adsearch,De 51 à 200 employés,PME,Paris,France
 42,6,Transdev,Plus de 10 000 employés,Multinationale,Lombard IL,États-Unis
+43,11,Freelance-info.fr,Inconnu,Inconnu,Paris,France
 44,12,Groupe Adéquat,De 501 à 1 000 employés,Moyenne entreprise,Lyon,France
 45,11,Multimedia France Productions,De 51 à 200 employés,PME,Paris,France 
 46,18,Modis,De 5 001 à 10 000 employés,Très grande entreprise,Zurich,Suisse
