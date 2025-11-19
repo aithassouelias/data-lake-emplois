@@ -1,0 +1,41 @@
+table D_Ville
+	lineageTag: 5131d3e9-bbfd-49e4-973c-df9eddeff4d8
+
+	column id_ville
+		dataType: int64
+		formatString: 0
+		lineageTag: 44b533f5-2d01-428b-947b-5ab22f4dffd6
+		summarizeBy: none
+		sourceColumn: id_ville
+
+		annotation SummarizationSetBy = Automatic
+
+	column ville
+		dataType: string
+		lineageTag: 3a35a1bd-eb67-4f33-8d5d-5614186da2dd
+		summarizeBy: none
+		sourceColumn: ville
+
+		annotation SummarizationSetBy = Automatic
+
+	column pays
+		dataType: string
+		lineageTag: c856654c-095d-4f82-a0cf-3e76968ee97b
+		summarizeBy: none
+		sourceColumn: pays
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Ville = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("db-etu.univ-lyon2.fr", "bia011"),
+				    public_d_ville = Source{[Schema="public",Item="d_ville"]}[Data]
+				in
+				    public_d_ville
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

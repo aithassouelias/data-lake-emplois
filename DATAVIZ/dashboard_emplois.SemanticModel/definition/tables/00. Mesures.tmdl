@@ -1,0 +1,20 @@
+table '00. Mesures'
+	lineageTag: c02eb83a-a575-46d7-8fe2-f992c0131bd6
+
+	column Column
+		formatString: 0
+		lineageTag: b49c5243-0cd7-47b4-b863-34d69881cfa2
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '00. Mesures' = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 4c0f08b6b7e247a6a6ba8ef1a0195ea1
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

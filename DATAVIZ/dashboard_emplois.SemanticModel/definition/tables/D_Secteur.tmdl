@@ -1,0 +1,33 @@
+table D_Secteur
+	lineageTag: b11f21be-a7b8-45f5-892c-710d3ddf8793
+
+	column id_secteur
+		dataType: int64
+		formatString: 0
+		lineageTag: 2329fb20-f30a-48e4-bab2-0541cf13cfa9
+		summarizeBy: none
+		sourceColumn: id_secteur
+
+		annotation SummarizationSetBy = Automatic
+
+	column secteur
+		dataType: string
+		lineageTag: ff938de6-41b8-448a-ad52-56d3bc40d76b
+		summarizeBy: none
+		sourceColumn: secteur
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Secteur = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("db-etu.univ-lyon2.fr", "bia011"),
+				    public_d_secteur = Source{[Schema="public",Item="d_secteur"]}[Data]
+				in
+				    public_d_secteur
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

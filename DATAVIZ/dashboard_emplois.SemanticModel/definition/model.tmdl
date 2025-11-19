@@ -10,5 +10,19 @@ annotation __PBI_TimeIntelligenceEnabled = 1
 
 annotation PBI_ProTooling = ["DevMode"]
 
+annotation PBI_QueryOrder = ["F_Offres","F_Avis","D_Ville","D_Type_Poste","D_Secteur","D_Note","D_Entreprise"]
+
+ref table F_Offres
+ref table DateTableTemplate_543903e2-4670-42bf-9933-bee05d1ce9b7
+ref table LocalDateTable_41e30217-42bd-42af-8b88-dc4cd153181b
+ref table F_Avis
+ref table LocalDateTable_599fa7d4-73ca-4efa-8e4f-00259e744178
+ref table D_Ville
+ref table D_Type_Poste
+ref table D_Secteur
+ref table D_Note
+ref table D_Entreprise
+ref table '00. Mesures'
+
 ref cultureInfo fr-FR
 

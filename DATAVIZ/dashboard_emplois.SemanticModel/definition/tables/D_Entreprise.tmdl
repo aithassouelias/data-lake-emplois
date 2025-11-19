@@ -1,0 +1,74 @@
+table D_Entreprise
+	lineageTag: d9b8db8c-154e-4582-aeee-5c010595fb21
+
+	column id_entreprise
+		dataType: int64
+		formatString: 0
+		lineageTag: a5db9ac5-902f-4ae4-a231-8200a233ef9c
+		summarizeBy: none
+		sourceColumn: id_entreprise
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_secteur
+		dataType: int64
+		formatString: 0
+		lineageTag: 674ab9bd-582e-4af2-9212-1096257b6f5f
+		summarizeBy: none
+		sourceColumn: id_secteur
+
+		annotation SummarizationSetBy = Automatic
+
+	column nom_entreprise
+		dataType: string
+		lineageTag: a6a42b53-0cc7-4fd6-8de1-f4e9847482d4
+		summarizeBy: none
+		sourceColumn: nom_entreprise
+
+		annotation SummarizationSetBy = Automatic
+
+	column siege_social
+		dataType: string
+		lineageTag: 9bcaef0c-2443-4836-a69b-536a45ae9152
+		summarizeBy: none
+		sourceColumn: siege_social
+
+		annotation SummarizationSetBy = Automatic
+
+	column taille
+		dataType: string
+		lineageTag: f6dff79e-182d-43b9-8a2b-32a6ee2e1395
+		summarizeBy: none
+		sourceColumn: taille
+
+		annotation SummarizationSetBy = Automatic
+
+	column categorie
+		dataType: string
+		lineageTag: 5e6124ae-4982-489d-a6e2-bd6b2aa066de
+		summarizeBy: none
+		sourceColumn: categorie
+
+		annotation SummarizationSetBy = Automatic
+
+	column pays
+		dataType: string
+		lineageTag: 4a5306ef-940d-462d-a8ba-acb491517737
+		summarizeBy: none
+		sourceColumn: pays
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Entreprise = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("db-etu.univ-lyon2.fr", "bia011"),
+				    public_d_entreprise = Source{[Schema="public",Item="d_entreprise"]}[Data]
+				in
+				    public_d_entreprise
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

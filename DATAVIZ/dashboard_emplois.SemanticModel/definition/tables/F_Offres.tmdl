@@ -1,0 +1,84 @@
+table F_Offres
+	lineageTag: 726a09b9-6ebc-4951-927b-86d59023d75a
+
+	column id_offre
+		dataType: int64
+		formatString: 0
+		lineageTag: c8ab2c80-0c9a-4907-b507-e95b7f1d693d
+		summarizeBy: sum
+		sourceColumn: id_offre
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_entreprise
+		dataType: int64
+		formatString: 0
+		lineageTag: 9aa64809-3ed4-4121-b877-fcbc31232952
+		summarizeBy: none
+		sourceColumn: id_entreprise
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_ville
+		dataType: int64
+		formatString: 0
+		lineageTag: d37f7183-ca41-4277-863d-96ed72372168
+		summarizeBy: none
+		sourceColumn: id_ville
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_type_poste
+		dataType: int64
+		formatString: 0
+		lineageTag: 44b5f38f-27f3-42f0-a03b-cc3c219cfa4c
+		summarizeBy: none
+		sourceColumn: id_type_poste
+
+		annotation SummarizationSetBy = Automatic
+
+	column libelle_emploi
+		dataType: string
+		lineageTag: 1694434e-8eff-43ba-9d8b-aa012b6f6f52
+		summarizeBy: none
+		sourceColumn: libelle_emploi
+
+		annotation SummarizationSetBy = Automatic
+
+	column contenu
+		dataType: string
+		lineageTag: f822d53d-8b5a-44a0-8fe4-0cabc750ca5f
+		summarizeBy: none
+		sourceColumn: contenu
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_posted
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 506e0fbd-53e1-416a-b27d-f045a96f91ef
+		summarizeBy: none
+		sourceColumn: date_posted
+
+		variation Variation
+			isDefault
+			relationship: 428fd3ac-b4da-446f-8a9e-a3872de17a82
+			defaultHierarchy: LocalDateTable_41e30217-42bd-42af-8b88-dc4cd153181b.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition F_Offres = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("db-etu.univ-lyon2.fr", "bia011"),
+				    public_f_offres = Source{[Schema="public",Item="f_offres"]}[Data]
+				in
+				    public_f_offres
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

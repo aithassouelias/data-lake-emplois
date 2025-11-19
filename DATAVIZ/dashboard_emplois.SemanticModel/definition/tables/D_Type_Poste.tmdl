@@ -1,0 +1,33 @@
+table D_Type_Poste
+	lineageTag: f202b84e-c2a5-4f23-a6c7-b67b6c6b6393
+
+	column id_type_poste
+		dataType: int64
+		formatString: 0
+		lineageTag: 88224276-af4d-4352-be54-c61e65d57871
+		summarizeBy: none
+		sourceColumn: id_type_poste
+
+		annotation SummarizationSetBy = Automatic
+
+	column type_poste
+		dataType: string
+		lineageTag: 41d1a07e-95d0-462b-b38f-a58e5b9d891d
+		summarizeBy: none
+		sourceColumn: type_poste
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Type_Poste = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("db-etu.univ-lyon2.fr", "bia011"),
+				    public_d_type_poste = Source{[Schema="public",Item="d_type_poste"]}[Data]
+				in
+				    public_d_type_poste
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

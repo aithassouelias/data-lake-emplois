@@ -1,0 +1,35 @@
+table D_Note
+	lineageTag: 011e0dbf-bc24-4ea3-9b28-55ded534d567
+
+	column id_note
+		dataType: int64
+		formatString: 0
+		lineageTag: ed2a03b0-a1dc-49fe-bda7-cdaefc3d045a
+		summarizeBy: none
+		sourceColumn: id_note
+
+		annotation SummarizationSetBy = Automatic
+
+	column note
+		dataType: double
+		lineageTag: 06ec21d3-8600-4547-aab7-e430a143a97a
+		summarizeBy: none
+		sourceColumn: note
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition D_Note = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("db-etu.univ-lyon2.fr", "bia011"),
+				    public_d_note = Source{[Schema="public",Item="d_note"]}[Data]
+				in
+				    public_d_note
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

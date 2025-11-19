@@ -1,0 +1,84 @@
+table F_Avis
+	lineageTag: 5da27f68-56cd-42a2-b081-0e54ac006e12
+
+	column id_avis
+		dataType: int64
+		formatString: 0
+		lineageTag: 70731ad6-3ca0-4e30-89bc-401909f7b23d
+		summarizeBy: sum
+		sourceColumn: id_avis
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_note
+		dataType: int64
+		formatString: 0
+		lineageTag: 538b6231-5f7d-4e92-b386-b114b004c29a
+		summarizeBy: none
+		sourceColumn: id_note
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_entreprise
+		dataType: int64
+		formatString: 0
+		lineageTag: 032de825-cb6e-452d-9ae0-48258e66045f
+		summarizeBy: none
+		sourceColumn: id_entreprise
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_publication
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: aa94d4c7-e121-41d3-a3c4-070859e5898d
+		summarizeBy: none
+		sourceColumn: date_publication
+
+		variation Variation
+			isDefault
+			relationship: ab221c0f-f81c-408c-82ff-3e71725e1621
+			defaultHierarchy: LocalDateTable_599fa7d4-73ca-4efa-8e4f-00259e744178.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column contenu_avis
+		dataType: string
+		lineageTag: 05b58776-5d12-4254-9dd1-1fd52c14cb33
+		summarizeBy: none
+		sourceColumn: contenu_avis
+
+		annotation SummarizationSetBy = Automatic
+
+	column inconvenient
+		dataType: string
+		lineageTag: 9667baf8-bd9e-40bb-844d-a262d0ebaa10
+		summarizeBy: none
+		sourceColumn: inconvenient
+
+		annotation SummarizationSetBy = Automatic
+
+	column avantage
+		dataType: string
+		lineageTag: a4d1302a-9580-423e-8670-ee8d1c6077ab
+		summarizeBy: none
+		sourceColumn: avantage
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Avis = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("db-etu.univ-lyon2.fr", "bia011"),
+				    public_f_avis = Source{[Schema="public",Item="f_avis"]}[Data],
+				    #"Valeurs nulles - remplacement" = Table.ReplaceValue(public_f_avis,"NULL",null,Replacer.ReplaceValue,{"avantage", "inconvenient"})
+				in
+				    #"Valeurs nulles - remplacement"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

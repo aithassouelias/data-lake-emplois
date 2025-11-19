@@ -1,0 +1,46 @@
+relationship 428fd3ac-b4da-446f-8a9e-a3872de17a82
+	joinOnDateBehavior: datePartOnly
+	fromColumn: F_Offres.date_posted
+	toColumn: LocalDateTable_41e30217-42bd-42af-8b88-dc4cd153181b.Date
+
+relationship ab221c0f-f81c-408c-82ff-3e71725e1621
+	joinOnDateBehavior: datePartOnly
+	fromColumn: F_Avis.date_publication
+	toColumn: LocalDateTable_599fa7d4-73ca-4efa-8e4f-00259e744178.Date
+
+relationship ba4a33fa-9569-410f-ad96-5510dffe694c
+	fromColumn: F_Offres.id_entreprise
+	toColumn: D_Entreprise.id_entreprise
+
+	annotation PBI_IsFromSource = FS
+
+relationship 5cd8a068-6fa3-4724-8572-8413fa0fca32
+	fromColumn: F_Offres.id_type_poste
+	toColumn: D_Type_Poste.id_type_poste
+
+	annotation PBI_IsFromSource = FS
+
+relationship 0a3af635-701c-49b3-bb31-597616011f4d
+	fromColumn: F_Offres.id_ville
+	toColumn: D_Ville.id_ville
+
+	annotation PBI_IsFromSource = FS
+
+relationship 8b63aaa1-8a7b-4119-be54-d70ccda4b6a6
+	fromColumn: F_Avis.id_entreprise
+	toColumn: D_Entreprise.id_entreprise
+
+	annotation PBI_IsFromSource = FS
+
+relationship 3ea682b4-1be7-47c1-81b7-da97614142c0
+	fromColumn: F_Avis.id_note
+	toColumn: D_Note.id_note
+
+	annotation PBI_IsFromSource = FS
+
+relationship 163c9978-1159-46a2-a212-5d2eedfbe8ab
+	fromColumn: D_Entreprise.id_secteur
+	toColumn: D_Secteur.id_secteur
+
+	annotation PBI_IsFromSource = FS
+
