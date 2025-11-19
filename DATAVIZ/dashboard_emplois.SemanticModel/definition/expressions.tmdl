@@ -1,0 +1,34 @@
+expression Requête1 = ```
+		let 
+		CreateDateTable = (StartDate as date, EndDate as date, optional Culture as nullable text) as table => 
+		let 
+		DayCount = Duration.Days(Duration.From(EndDate - StartDate)), 
+		Source = List.Dates(StartDate,DayCount,#duration(1,0,0,0)), 
+		TableFromList = Table.FromList(Source, Splitter.SplitByNothing()), 
+		ChangedType = Table.TransformColumnTypes(TableFromList,{{"Column1", type date}}), 
+		RenamedColumns = Table.RenameColumns(ChangedType,{{"Column1", "Date"}}), 
+		InsertYear = Table.AddColumn(RenamedColumns, "Année", each Date.Year([Date]), Int64.Type), 
+		InsertQuarter = Table.AddColumn(InsertYear, "Trimestre", each Date.QuarterOfYear([Date]), Int64.Type), 
+		InsertMonth = Table.AddColumn(InsertQuarter, "MoisNombre", each Date.Month([Date]), Int64.Type), 
+		InsertDay = Table.AddColumn(InsertMonth, "Jour", each Date.Day([Date]), Int64.Type), 
+		InsertDayInt = Table.AddColumn(InsertDay, "DateNombre", each [Année] * 10000 + [MoisNombre] * 100 + [Jour]), 
+		InsertMonthName = Table.AddColumn(InsertDayInt, "MoisNom", each Date.ToText([Date], "MMMM", Culture), type text), 
+		InsertCalendarMonth = Table.AddColumn(InsertMonthName, "MoisCalendrier", each (try(Text.Range([MoisNom],0,3)) 
+		otherwise [MoisNom]) & " " & Number.ToText([Année])), 
+		InsertCalendarQtr = Table.AddColumn(InsertCalendarMonth, "TrimestreCalendrier", each "T" & Number.ToText([Trimestre]) & 
+		" " & Number.ToText([Année])), 
+		InsertDayWeek = Table.AddColumn(InsertCalendarQtr, "JourSemaine", each Date.DayOfWeek([Date])), 
+		InsertDayName = Table.AddColumn(InsertDayWeek, "NomJourSemaine", each Date.ToText([Date], "dddd", Culture), type 
+		text), 
+		InsertWeekEnding = Table.AddColumn(InsertDayName, "FinSemaine", each Date.EndOfWeek([Date]), type date) 
+		in 
+		InsertWeekEnding 
+		in 
+		CreateDateTable
+		```
+	lineageTag: 4a8b82d5-f561-43ae-a5a7-added1485958
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+

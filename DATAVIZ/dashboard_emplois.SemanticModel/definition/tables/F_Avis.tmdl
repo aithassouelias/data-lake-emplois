@@ -1,10 +1,10 @@
-table F_Avis
-	lineageTag: 5da27f68-56cd-42a2-b081-0e54ac006e12
+table F_avis
+	lineageTag: 4a99429f-4443-4bbe-b6d0-4101ee953e65
 
 	column id_avis
 		dataType: int64
 		formatString: 0
-		lineageTag: 70731ad6-3ca0-4e30-89bc-401909f7b23d
+		lineageTag: 4b8d711d-aad7-47a5-8ac7-9c10933adcc7
 		summarizeBy: sum
 		sourceColumn: id_avis
 
@@ -13,32 +13,18 @@ table F_Avis
 	column id_note
 		dataType: int64
 		formatString: 0
-		lineageTag: 538b6231-5f7d-4e92-b386-b114b004c29a
+		lineageTag: 096b3368-d638-4a22-b185-4ba31d09e633
 		summarizeBy: none
 		sourceColumn: id_note
-
-		annotation SummarizationSetBy = Automatic
-
-	column id_entreprise
-		dataType: int64
-		formatString: 0
-		lineageTag: 032de825-cb6e-452d-9ae0-48258e66045f
-		summarizeBy: none
-		sourceColumn: id_entreprise
 
 		annotation SummarizationSetBy = Automatic
 
 	column date_publication
 		dataType: dateTime
 		formatString: Long Date
-		lineageTag: aa94d4c7-e121-41d3-a3c4-070859e5898d
+		lineageTag: 1e056e65-21e7-47e6-b701-74b63db84497
 		summarizeBy: none
 		sourceColumn: date_publication
-
-		variation Variation
-			isDefault
-			relationship: ab221c0f-f81c-408c-82ff-3e71725e1621
-			defaultHierarchy: LocalDateTable_599fa7d4-73ca-4efa-8e4f-00259e744178.'Hiérarchie de dates'
 
 		annotation SummarizationSetBy = Automatic
 
@@ -46,7 +32,7 @@ table F_Avis
 
 	column contenu_avis
 		dataType: string
-		lineageTag: 05b58776-5d12-4254-9dd1-1fd52c14cb33
+		lineageTag: e5e335f1-09de-4dba-95f0-8f5a02b0f084
 		summarizeBy: none
 		sourceColumn: contenu_avis
 
@@ -54,7 +40,7 @@ table F_Avis
 
 	column inconvenient
 		dataType: string
-		lineageTag: 9667baf8-bd9e-40bb-844d-a262d0ebaa10
+		lineageTag: 19e5db44-46de-4f8a-8b2a-65e1d492cf08
 		summarizeBy: none
 		sourceColumn: inconvenient
 
@@ -62,21 +48,32 @@ table F_Avis
 
 	column avantage
 		dataType: string
-		lineageTag: a4d1302a-9580-423e-8670-ee8d1c6077ab
+		lineageTag: 9a427974-8da8-48b2-a838-fdc9c50894fd
 		summarizeBy: none
 		sourceColumn: avantage
 
 		annotation SummarizationSetBy = Automatic
 
-	partition F_Avis = m
+	column id_entreprise
+		dataType: int64
+		formatString: 0
+		lineageTag: 6ea1fe79-d5dd-45aa-a7e5-bd65b0e9eaee
+		summarizeBy: none
+		sourceColumn: id_entreprise
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_avis = m
 		mode: import
 		source =
 				let
-				    Source = PostgreSQL.Database("db-etu.univ-lyon2.fr", "bia011"),
-				    public_f_avis = Source{[Schema="public",Item="f_avis"]}[Data],
-				    #"Valeurs nulles - remplacement" = Table.ReplaceValue(public_f_avis,"NULL",null,Replacer.ReplaceValue,{"avantage", "inconvenient"})
+				    Source = SharePoint.Files("https://univlyon2fr.sharepoint.com/sites/datalake_yea", [ApiVersion = 15]),
+				    #"F_avis csv_https://univlyon2fr sharepoint com/sites/datalake_yea/Documents partages/Sources/" = Source{[Name="F_avis.csv",#"Folder Path"="https://univlyon2fr.sharepoint.com/sites/datalake_yea/Documents partages/Sources/"]}[Content],
+				    #"CSV importé" = Csv.Document(#"F_avis csv_https://univlyon2fr sharepoint com/sites/datalake_yea/Documents partages/Sources/",[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"En-têtes promus" = Table.PromoteHeaders(#"CSV importé", [PromoteAllScalars=true]),
+				    #"Type modifié" = Table.TransformColumnTypes(#"En-têtes promus",{{"id_avis", Int64.Type}, {"id_note", Int64.Type}, {"date_publication", type date}, {"contenu_avis", type text}, {"inconvenient", type text}, {"avantage", type text}, {"id_entreprise", Int64.Type}})
 				in
-				    #"Valeurs nulles - remplacement"
+				    #"Type modifié"
 
 	annotation PBI_NavigationStepName = Navigation
 

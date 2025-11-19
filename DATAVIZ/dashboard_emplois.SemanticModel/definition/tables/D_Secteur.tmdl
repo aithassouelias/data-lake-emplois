@@ -1,10 +1,10 @@
-table D_Secteur
-	lineageTag: b11f21be-a7b8-45f5-892c-710d3ddf8793
+table D_secteur
+	lineageTag: d6007d7c-c486-4bb1-a998-31b1ecb0ab85
 
 	column id_secteur
 		dataType: int64
 		formatString: 0
-		lineageTag: 2329fb20-f30a-48e4-bab2-0541cf13cfa9
+		lineageTag: 760efff7-c0e5-4ee7-8a60-4b5dd99c8c32
 		summarizeBy: none
 		sourceColumn: id_secteur
 
@@ -12,20 +12,23 @@ table D_Secteur
 
 	column secteur
 		dataType: string
-		lineageTag: ff938de6-41b8-448a-ad52-56d3bc40d76b
+		lineageTag: fe5ea83b-2667-4d4a-a920-ef45eaa2c558
 		summarizeBy: none
 		sourceColumn: secteur
 
 		annotation SummarizationSetBy = Automatic
 
-	partition D_Secteur = m
+	partition D_secteur = m
 		mode: import
 		source =
 				let
-				    Source = PostgreSQL.Database("db-etu.univ-lyon2.fr", "bia011"),
-				    public_d_secteur = Source{[Schema="public",Item="d_secteur"]}[Data]
+				    Source = SharePoint.Files("https://univlyon2fr.sharepoint.com/sites/datalake_yea", [ApiVersion = 15]),
+				    #"d_secteur csv_https://univlyon2fr sharepoint com/sites/datalake_yea/Documents partages/Sources/" = Source{[Name="d_secteur.csv",#"Folder Path"="https://univlyon2fr.sharepoint.com/sites/datalake_yea/Documents partages/Sources/"]}[Content],
+				    #"CSV importé" = Csv.Document(#"d_secteur csv_https://univlyon2fr sharepoint com/sites/datalake_yea/Documents partages/Sources/",[Delimiter=",", Columns=2, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"En-têtes promus" = Table.PromoteHeaders(#"CSV importé", [PromoteAllScalars=true]),
+				    #"Type modifié" = Table.TransformColumnTypes(#"En-têtes promus",{{"id_secteur", Int64.Type}, {"secteur", type text}})
 				in
-				    public_d_secteur
+				    #"Type modifié"
 
 	annotation PBI_NavigationStepName = Navigation
 

@@ -1,10 +1,10 @@
-table D_Type_Poste
-	lineageTag: f202b84e-c2a5-4f23-a6c7-b67b6c6b6393
+table D_type_poste
+	lineageTag: d1b36ef7-0bc2-4941-8c59-b8c2ebbc763b
 
 	column id_type_poste
 		dataType: int64
 		formatString: 0
-		lineageTag: 88224276-af4d-4352-be54-c61e65d57871
+		lineageTag: 24895cf1-fc7c-45e8-aa29-9e505d306943
 		summarizeBy: none
 		sourceColumn: id_type_poste
 
@@ -12,20 +12,23 @@ table D_Type_Poste
 
 	column type_poste
 		dataType: string
-		lineageTag: 41d1a07e-95d0-462b-b38f-a58e5b9d891d
+		lineageTag: 07b0bdd9-b663-49ce-8a3d-12306668b706
 		summarizeBy: none
 		sourceColumn: type_poste
 
 		annotation SummarizationSetBy = Automatic
 
-	partition D_Type_Poste = m
+	partition D_type_poste = m
 		mode: import
 		source =
 				let
-				    Source = PostgreSQL.Database("db-etu.univ-lyon2.fr", "bia011"),
-				    public_d_type_poste = Source{[Schema="public",Item="d_type_poste"]}[Data]
+				    Source = SharePoint.Files("https://univlyon2fr.sharepoint.com/sites/datalake_yea", [ApiVersion = 15]),
+				    #"d_type_poste csv_https://univlyon2fr sharepoint com/sites/datalake_yea/Documents partages/Sources/" = Source{[Name="d_type_poste.csv",#"Folder Path"="https://univlyon2fr.sharepoint.com/sites/datalake_yea/Documents partages/Sources/"]}[Content],
+				    #"CSV importé" = Csv.Document(#"d_type_poste csv_https://univlyon2fr sharepoint com/sites/datalake_yea/Documents partages/Sources/",[Delimiter=",", Columns=2, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"En-têtes promus" = Table.PromoteHeaders(#"CSV importé", [PromoteAllScalars=true]),
+				    #"Type modifié" = Table.TransformColumnTypes(#"En-têtes promus",{{"id_type_poste", Int64.Type}, {"type_poste", type text}})
 				in
-				    public_d_type_poste
+				    #"Type modifié"
 
 	annotation PBI_NavigationStepName = Navigation
 

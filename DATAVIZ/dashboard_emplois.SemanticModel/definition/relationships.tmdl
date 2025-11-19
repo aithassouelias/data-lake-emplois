@@ -1,46 +1,32 @@
-relationship 428fd3ac-b4da-446f-8a9e-a3872de17a82
-	joinOnDateBehavior: datePartOnly
-	fromColumn: F_Offres.date_posted
-	toColumn: LocalDateTable_41e30217-42bd-42af-8b88-dc4cd153181b.Date
+relationship AutoDetected_a1adac0b-9f92-47d3-a3fc-0ffa95579858
+	fromColumn: F_avis.id_entreprise
+	toColumn: D_entreprise.id_entreprise
 
-relationship ab221c0f-f81c-408c-82ff-3e71725e1621
-	joinOnDateBehavior: datePartOnly
-	fromColumn: F_Avis.date_publication
-	toColumn: LocalDateTable_599fa7d4-73ca-4efa-8e4f-00259e744178.Date
+relationship AutoDetected_b90f7e15-7501-4975-82eb-c27f80b3ba12
+	fromColumn: F_offres.id_entreprise
+	toColumn: D_entreprise.id_entreprise
 
-relationship ba4a33fa-9569-410f-ad96-5510dffe694c
-	fromColumn: F_Offres.id_entreprise
-	toColumn: D_Entreprise.id_entreprise
+relationship AutoDetected_2d56951f-3d4c-4940-a5d4-87a6d38f89de
+	fromColumn: D_entreprise.id_secteur
+	toColumn: D_secteur.id_secteur
 
-	annotation PBI_IsFromSource = FS
+relationship AutoDetected_2e5e0bf3-f19e-4dec-8e7b-72dca6edb62a
+	fromColumn: F_avis.id_note
+	toColumn: D_note.id_note
 
-relationship 5cd8a068-6fa3-4724-8572-8413fa0fca32
-	fromColumn: F_Offres.id_type_poste
-	toColumn: D_Type_Poste.id_type_poste
+relationship AutoDetected_141be2e7-f133-4096-a7ac-1a351f766cca
+	fromColumn: F_offres.id_type_poste
+	toColumn: D_type_poste.id_type_poste
 
-	annotation PBI_IsFromSource = FS
+relationship AutoDetected_fb3585f3-cc46-4280-8e6a-76d72cd3bef2
+	fromColumn: F_offres.id_ville
+	toColumn: D_ville.id_ville
 
-relationship 0a3af635-701c-49b3-bb31-597616011f4d
-	fromColumn: F_Offres.id_ville
-	toColumn: D_Ville.id_ville
+relationship a86f0cb2-f851-575a-b0f9-887530c586c2
+	fromColumn: F_avis.date_publication
+	toColumn: D_calendrier.Date
 
-	annotation PBI_IsFromSource = FS
-
-relationship 8b63aaa1-8a7b-4119-be54-d70ccda4b6a6
-	fromColumn: F_Avis.id_entreprise
-	toColumn: D_Entreprise.id_entreprise
-
-	annotation PBI_IsFromSource = FS
-
-relationship 3ea682b4-1be7-47c1-81b7-da97614142c0
-	fromColumn: F_Avis.id_note
-	toColumn: D_Note.id_note
-
-	annotation PBI_IsFromSource = FS
-
-relationship 163c9978-1159-46a2-a212-5d2eedfbe8ab
-	fromColumn: D_Entreprise.id_secteur
-	toColumn: D_Secteur.id_secteur
-
-	annotation PBI_IsFromSource = FS
+relationship 5f23d424-a429-c8ac-c91e-87820f2123ba
+	fromColumn: F_offres.date_posted
+	toColumn: D_calendrier.Date
 

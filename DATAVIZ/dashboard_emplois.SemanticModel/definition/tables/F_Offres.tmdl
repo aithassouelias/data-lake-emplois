@@ -1,10 +1,10 @@
-table F_Offres
-	lineageTag: 726a09b9-6ebc-4951-927b-86d59023d75a
+table F_offres
+	lineageTag: 94be368d-5f6d-4705-849d-3ba2444f315d
 
 	column id_offre
 		dataType: int64
 		formatString: 0
-		lineageTag: c8ab2c80-0c9a-4907-b507-e95b7f1d693d
+		lineageTag: 6912a871-9d65-46bc-88eb-a82558d9480b
 		summarizeBy: sum
 		sourceColumn: id_offre
 
@@ -13,7 +13,7 @@ table F_Offres
 	column id_entreprise
 		dataType: int64
 		formatString: 0
-		lineageTag: 9aa64809-3ed4-4121-b877-fcbc31232952
+		lineageTag: bfbe34c0-9681-4da4-ada7-81127475be08
 		summarizeBy: none
 		sourceColumn: id_entreprise
 
@@ -22,7 +22,7 @@ table F_Offres
 	column id_ville
 		dataType: int64
 		formatString: 0
-		lineageTag: d37f7183-ca41-4277-863d-96ed72372168
+		lineageTag: 779f1a06-c01c-472d-9887-122000d92ef5
 		summarizeBy: none
 		sourceColumn: id_ville
 
@@ -31,7 +31,7 @@ table F_Offres
 	column id_type_poste
 		dataType: int64
 		formatString: 0
-		lineageTag: 44b5f38f-27f3-42f0-a03b-cc3c219cfa4c
+		lineageTag: a87f7823-f0c9-472a-bd1e-a06ef7432589
 		summarizeBy: none
 		sourceColumn: id_type_poste
 
@@ -39,7 +39,7 @@ table F_Offres
 
 	column libelle_emploi
 		dataType: string
-		lineageTag: 1694434e-8eff-43ba-9d8b-aa012b6f6f52
+		lineageTag: ca3f7c7c-2943-4117-a5f4-581c13bbbe0b
 		summarizeBy: none
 		sourceColumn: libelle_emploi
 
@@ -47,7 +47,7 @@ table F_Offres
 
 	column contenu
 		dataType: string
-		lineageTag: f822d53d-8b5a-44a0-8fe4-0cabc750ca5f
+		lineageTag: ece1bdbd-501b-43d9-88e7-47fe484a138e
 		summarizeBy: none
 		sourceColumn: contenu
 
@@ -56,27 +56,25 @@ table F_Offres
 	column date_posted
 		dataType: dateTime
 		formatString: Long Date
-		lineageTag: 506e0fbd-53e1-416a-b27d-f045a96f91ef
+		lineageTag: 02bc905f-d809-490f-87f2-8e4456e886b4
 		summarizeBy: none
 		sourceColumn: date_posted
-
-		variation Variation
-			isDefault
-			relationship: 428fd3ac-b4da-446f-8a9e-a3872de17a82
-			defaultHierarchy: LocalDateTable_41e30217-42bd-42af-8b88-dc4cd153181b.'Hiérarchie de dates'
 
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
 
-	partition F_Offres = m
+	partition F_offres = m
 		mode: import
 		source =
 				let
-				    Source = PostgreSQL.Database("db-etu.univ-lyon2.fr", "bia011"),
-				    public_f_offres = Source{[Schema="public",Item="f_offres"]}[Data]
+				    Source = SharePoint.Files("https://univlyon2fr.sharepoint.com/sites/datalake_yea", [ApiVersion = 15]),
+				    #"F_offres csv_https://univlyon2fr sharepoint com/sites/datalake_yea/Documents partages/Sources/" = Source{[Name="F_offres.csv",#"Folder Path"="https://univlyon2fr.sharepoint.com/sites/datalake_yea/Documents partages/Sources/"]}[Content],
+				    #"CSV importé" = Csv.Document(#"F_offres csv_https://univlyon2fr sharepoint com/sites/datalake_yea/Documents partages/Sources/",[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"En-têtes promus" = Table.PromoteHeaders(#"CSV importé", [PromoteAllScalars=true]),
+				    #"Type modifié" = Table.TransformColumnTypes(#"En-têtes promus",{{"id_offre", Int64.Type}, {"id_entreprise", Int64.Type}, {"id_ville", Int64.Type}, {"id_type_poste", Int64.Type}, {"libelle_emploi", type text}, {"contenu", type text}, {"date_posted", type date}})
 				in
-				    public_f_offres
+				    #"Type modifié"
 
 	annotation PBI_NavigationStepName = Navigation
 

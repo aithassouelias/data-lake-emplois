@@ -1,10 +1,10 @@
-table D_Entreprise
-	lineageTag: d9b8db8c-154e-4582-aeee-5c010595fb21
+table D_entreprise
+	lineageTag: 64268d34-a21a-4fc2-8013-4564d5251291
 
 	column id_entreprise
 		dataType: int64
 		formatString: 0
-		lineageTag: a5db9ac5-902f-4ae4-a231-8200a233ef9c
+		lineageTag: be531c30-c0a4-4d6d-9b1f-8576d60f18c0
 		summarizeBy: none
 		sourceColumn: id_entreprise
 
@@ -13,7 +13,7 @@ table D_Entreprise
 	column id_secteur
 		dataType: int64
 		formatString: 0
-		lineageTag: 674ab9bd-582e-4af2-9212-1096257b6f5f
+		lineageTag: fd6afc1f-7c24-4bc3-9d23-e4f04c95aa27
 		summarizeBy: none
 		sourceColumn: id_secteur
 
@@ -21,23 +21,15 @@ table D_Entreprise
 
 	column nom_entreprise
 		dataType: string
-		lineageTag: a6a42b53-0cc7-4fd6-8de1-f4e9847482d4
+		lineageTag: bcce51ec-977b-4543-b103-dba7105244f1
 		summarizeBy: none
 		sourceColumn: nom_entreprise
 
 		annotation SummarizationSetBy = Automatic
 
-	column siege_social
-		dataType: string
-		lineageTag: 9bcaef0c-2443-4836-a69b-536a45ae9152
-		summarizeBy: none
-		sourceColumn: siege_social
-
-		annotation SummarizationSetBy = Automatic
-
 	column taille
 		dataType: string
-		lineageTag: f6dff79e-182d-43b9-8a2b-32a6ee2e1395
+		lineageTag: fec3b12a-b778-40c2-b968-a49e1f4e93a3
 		summarizeBy: none
 		sourceColumn: taille
 
@@ -45,28 +37,39 @@ table D_Entreprise
 
 	column categorie
 		dataType: string
-		lineageTag: 5e6124ae-4982-489d-a6e2-bd6b2aa066de
+		lineageTag: 0a77be9d-274d-4cfc-a806-39992f67df8d
 		summarizeBy: none
 		sourceColumn: categorie
 
 		annotation SummarizationSetBy = Automatic
 
+	column siege_social
+		dataType: string
+		lineageTag: 5d17a537-8fe2-4745-8b5c-42651036700e
+		summarizeBy: none
+		sourceColumn: siege_social
+
+		annotation SummarizationSetBy = Automatic
+
 	column pays
 		dataType: string
-		lineageTag: 4a5306ef-940d-462d-a8ba-acb491517737
+		lineageTag: 8da0c78e-bd27-43ce-b9b4-d16f01c998b6
 		summarizeBy: none
 		sourceColumn: pays
 
 		annotation SummarizationSetBy = Automatic
 
-	partition D_Entreprise = m
+	partition D_entreprise = m
 		mode: import
 		source =
 				let
-				    Source = PostgreSQL.Database("db-etu.univ-lyon2.fr", "bia011"),
-				    public_d_entreprise = Source{[Schema="public",Item="d_entreprise"]}[Data]
+				    Source = SharePoint.Files("https://univlyon2fr.sharepoint.com/sites/datalake_yea", [ApiVersion = 15]),
+				    #"d_entreprise csv_https://univlyon2fr sharepoint com/sites/datalake_yea/Documents partages/Sources/" = Source{[Name="d_entreprise.csv",#"Folder Path"="https://univlyon2fr.sharepoint.com/sites/datalake_yea/Documents partages/Sources/"]}[Content],
+				    #"CSV importé" = Csv.Document(#"d_entreprise csv_https://univlyon2fr sharepoint com/sites/datalake_yea/Documents partages/Sources/",[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"En-têtes promus" = Table.PromoteHeaders(#"CSV importé", [PromoteAllScalars=true]),
+				    #"Type modifié" = Table.TransformColumnTypes(#"En-têtes promus",{{"id_entreprise", Int64.Type}, {"id_secteur", Int64.Type}, {"nom_entreprise", type text}, {"taille", type text}, {"categorie", type text}, {"siege_social", type text}, {"pays", type text}})
 				in
-				    public_d_entreprise
+				    #"Type modifié"
 
 	annotation PBI_NavigationStepName = Navigation
 
