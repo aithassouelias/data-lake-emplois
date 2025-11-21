@@ -59,6 +59,87 @@ table D_entreprise
 
 		annotation SummarizationSetBy = Automatic
 
+	column NoteMoyenneEntreprise = ```
+			
+			AVERAGEX(
+			    RELATEDTABLE(D_note),
+			    D_note[note]
+			)
+			
+			```
+		lineageTag: 47bec14c-1701-46c0-b3f7-f00fef22236b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NoteMoyenneSecteur = ```
+			
+			VAR secteur = D_entreprise[id_secteur]   
+			RETURN
+			CALCULATE(
+			    AVERAGE(D_note[note]),
+			    FILTER(
+			        F_avis,
+			        RELATED(D_entreprise[id_secteur]) = secteur   -- on compare le secteur du fait avec la variable
+			    )
+			)
+			
+			
+			
+			```
+		lineageTag: 14b65e84-b79e-4f00-bda4-97c06be35c0c
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Note = ```
+			
+			COALESCE(
+			    D_entreprise[NoteMoyenneEntreprise],   -- si la note moyenne existe, on la garde
+			    D_entreprise[NoteMoyenneSecteur]       -- sinon on prend la moyenne du secteur
+			)
+			
+			```
+		lineageTag: 60b08795-67d9-482c-baa4-45b2485c6de8
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Arrondi_note = ROUND(D_entreprise[Note],0)
+		lineageTag: db8756db-cb6a-4821-b10e-637deea0bb39
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Etoiles = ```
+			
+			SWITCH(
+			    TRUE(),
+			    D_entreprise[arrondi_note] = 5, "⭐⭐⭐⭐⭐",
+			    D_entreprise[arrondi_note] = 4, "⭐⭐⭐⭐",
+			    D_entreprise[arrondi_note] = 3, "⭐⭐⭐",
+			    D_entreprise[arrondi_note] = 2, "⭐⭐",
+			    D_entreprise[arrondi_note] = 1, "⭐",
+			    ""   -- valeur par défaut si arrondi_note est vide ou autre
+			)
+			
+			```
+		lineageTag: 37950631-f1ec-4b31-9829-a9eff839000f
+		summarizeBy: none
+		sortByColumn: Arrondi_note
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
 	partition D_entreprise = m
 		mode: import
 		source =

@@ -11,12 +11,32 @@ table D_note
 		annotation SummarizationSetBy = Automatic
 
 	column note
-		dataType: string
+		dataType: double
 		lineageTag: cba008d2-3b2b-47bb-a174-be7102bccd68
 		summarizeBy: none
 		sourceColumn: note
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column etoile
+		dataType: string
+		lineageTag: 0447213a-4ac6-42b8-bc8d-96f531c2a753
+		summarizeBy: none
+		sourceColumn: etoile
+
+		annotation SummarizationSetBy = Automatic
+
+	column arrondi_note
+		dataType: double
+		lineageTag: aad42939-03e8-43d4-9498-f92628b016e8
+		summarizeBy: none
+		sourceColumn: arrondi_note
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	partition D_note = m
 		mode: import
@@ -26,9 +46,25 @@ table D_note
 				    #"d_note csv_https://univlyon2fr sharepoint com/sites/datalake_yea/Documents partages/Sources/" = Source{[Name="d_note.csv",#"Folder Path"="https://univlyon2fr.sharepoint.com/sites/datalake_yea/Documents partages/Sources/"]}[Content],
 				    #"CSV importé" = Csv.Document(#"d_note csv_https://univlyon2fr sharepoint com/sites/datalake_yea/Documents partages/Sources/",[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"En-têtes promus" = Table.PromoteHeaders(#"CSV importé", [PromoteAllScalars=true]),
-				    #"Type modifié" = Table.TransformColumnTypes(#"En-têtes promus",{{"id_note", Int64.Type}, {"note", type text}})
+				    #"Type modifié" = Table.TransformColumnTypes(#"En-têtes promus",{{"id_note", Int64.Type}, {"note", type text}}),
+				    #"Valeur remplacée" = Table.ReplaceValue(#"Type modifié",".",",",Replacer.ReplaceText,{"note"}),
+				    #"Type modifié1" = Table.TransformColumnTypes(#"Valeur remplacée",{{"note", type number}}),
+				    #"Arrondi inséré" = Table.AddColumn(#"Type modifié1", "Arrondi", each Number.Round([note], 0), type number),
+				    #"Colonnes renommées" = Table.RenameColumns(#"Arrondi inséré",{{"Arrondi", "Arrondi_note"}}),
+				    #"Type modifié2" = Table.TransformColumnTypes(#"Colonnes renommées",{{"Arrondi_note", Int64.Type}}),
+				    #"Type modifié3" = Table.TransformColumnTypes(#"Type modifié2",{{"Arrondi_note", type text}}),
+				    #"Valeur remplacée1" = Table.ReplaceValue(#"Type modifié3","0","1",Replacer.ReplaceText,{"Arrondi_note"}),
+				    #"Lignes filtrées" = Table.SelectRows(#"Valeur remplacée1", each true),
+				    #"Valeur remplacée2" = Table.ReplaceValue(#"Lignes filtrées","1","⭐",Replacer.ReplaceText,{"Arrondi_note"}),
+				    #"Valeur remplacée3" = Table.ReplaceValue(#"Valeur remplacée2","2","⭐⭐",Replacer.ReplaceText,{"Arrondi_note"}),
+				    #"Valeur remplacée4" = Table.ReplaceValue(#"Valeur remplacée3","3","⭐⭐⭐",Replacer.ReplaceText,{"Arrondi_note"}),
+				    #"Valeur remplacée5" = Table.ReplaceValue(#"Valeur remplacée4","4","⭐⭐⭐⭐",Replacer.ReplaceText,{"Arrondi_note"}),
+				    #"Valeur remplacée6" = Table.ReplaceValue(#"Valeur remplacée5","5","⭐⭐⭐⭐⭐",Replacer.ReplaceText,{"Arrondi_note"}),
+				    #"Arrondi inséré1" = Table.AddColumn(#"Valeur remplacée6", "Arrondi", each Number.Round([note], 0), type number),
+				    #"Colonnes renommées1" = Table.RenameColumns(#"Arrondi inséré1",{{"Arrondi_note", "etoile"}, {"Arrondi", "arrondi_note"}}),
+				    #"Lignes triées" = Table.Sort(#"Colonnes renommées1",{{"arrondi_note", Order.Ascending}})
 				in
-				    #"Type modifié"
+				    #"Lignes triées"
 
 	annotation PBI_NavigationStepName = Navigation
 

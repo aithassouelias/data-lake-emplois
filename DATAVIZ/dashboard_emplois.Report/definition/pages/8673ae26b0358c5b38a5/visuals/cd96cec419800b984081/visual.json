@@ -1,0 +1,94 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "cd96cec419800b984081",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "height": 720,
+    "width": 1280,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "F_offres"
+                    }
+                  },
+                  "Property": "libelle_emploi"
+                }
+              },
+              "queryRef": "F_offres.libelle_emploi",
+              "nativeQueryRef": "libelle_emploi"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "D_entreprise"
+                    }
+                  },
+                  "Property": "nom_entreprise"
+                }
+              },
+              "queryRef": "D_entreprise.nom_entreprise",
+              "nativeQueryRef": "nom_entreprise"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "D_type_poste"
+                    }
+                  },
+                  "Property": "type_poste"
+                }
+              },
+              "queryRef": "D_type_poste.type_poste",
+              "nativeQueryRef": "type_poste"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "D_ville"
+                    }
+                  },
+                  "Property": "ville"
+                }
+              },
+              "queryRef": "D_ville.ville",
+              "nativeQueryRef": "ville"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "F_offres"
+                    }
+                  },
+                  "Property": "date_posted"
+                }
+              },
+              "queryRef": "F_offres.date_posted",
+              "nativeQueryRef": "date_posted"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -11,6 +11,7 @@ relationship AutoDetected_2d56951f-3d4c-4940-a5d4-87a6d38f89de
 	toColumn: D_secteur.id_secteur
 
 relationship AutoDetected_2e5e0bf3-f19e-4dec-8e7b-72dca6edb62a
+	crossFilteringBehavior: bothDirections
 	fromColumn: F_avis.id_note
 	toColumn: D_note.id_note
 

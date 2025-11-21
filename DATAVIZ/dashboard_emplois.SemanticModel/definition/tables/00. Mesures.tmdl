@@ -1,7 +1,45 @@
 table '00. Mesures'
 	lineageTag: c02eb83a-a575-46d7-8fe2-f992c0131bd6
 
+	measure Nb_offres = DISTINCTCOUNT(F_offres[id_offre])
+		formatString: 0
+		lineageTag: 6b09f6d0-55f2-48e8-a321-3d14369b0920
+
+	measure Nb_avis = DISTINCTCOUNT(F_avis[id_avis])
+		formatString: 0
+		lineageTag: 0fb3d022-86db-4930-b61b-0eded1553b59
+
+	measure Avg_note = AVERAGE(D_note[note])
+		formatString: 0
+		lineageTag: b8769dae-9d19-4238-8519-d5af3654bf97
+
+	measure Croissance_Offres_Annuelle = ```
+			
+			DIVIDE([Nb_offres] - [PrevYearOffres], [PrevYearOffres])
+			
+			```
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: 229019ae-2d08-474a-8089-68d1cf06a8c7
+
+	measure Attractivité_entreprise = [Nb_avis] * [Nb_offres]
+		formatString: 0
+		lineageTag: 2569521f-4db3-4f4b-b2f0-f40b6204715d
+
+	measure Avg_note_secteur = ```
+			
+			AVERAGEX(VALUES(D_secteur[secteur]), [Avg_note])
+			
+			```
+		lineageTag: 4409fbca-2e18-467b-a855-7e69b8d88010
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure PrevYearOffres = CALCULATE([Nb_offres], SAMEPERIODLASTYEAR(D_calendrier[Date]))
+		formatString: 0
+		lineageTag: 65d95bb0-cb7f-43a3-85a0-e15034e9e63e
+
 	column Column
+		isHidden
 		formatString: 0
 		lineageTag: b49c5243-0cd7-47b4-b863-34d69881cfa2
 		summarizeBy: sum

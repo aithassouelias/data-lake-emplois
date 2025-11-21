@@ -63,6 +63,9 @@ table D_calendrier
 		lineageTag: 811231a5-44a6-4290-943f-92e3bd7de20b
 		summarizeBy: none
 		sourceColumn: MoisNom
+		sortByColumn: MoisNombre
+
+		changedProperty = SortByColumn
 
 		annotation SummarizationSetBy = Automatic
 
@@ -135,8 +138,6 @@ table D_calendrier
 				    Source = Requête1(#date(2010, 1, 1), #date(2099, 12, 31), null)
 				in
 				    Source
-
-	changedProperty = Name
 
 	annotation PBI_NavigationStepName = Navigation
 

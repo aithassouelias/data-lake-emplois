@@ -1,0 +1,74 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "d062c3974ec7d7210a57",
+  "position": {
+    "x": 0,
+    "y": 114.28571428571429,
+    "z": 0,
+    "height": 365.71428571428572,
+    "width": 368.57142857142861,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "pieChart",
+    "query": {
+      "queryState": {
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "D_secteur"
+                    }
+                  },
+                  "Property": "secteur"
+                }
+              },
+              "queryRef": "D_secteur.secteur",
+              "nativeQueryRef": "secteur"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "00. Mesures"
+                    }
+                  },
+                  "Property": "Nb_offres"
+                }
+              },
+              "queryRef": "00. Mesures.Nb_offres",
+              "nativeQueryRef": "Nb_offres"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "00. Mesures"
+                  }
+                },
+                "Property": "Nb_offres"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
