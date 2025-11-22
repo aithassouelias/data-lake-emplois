@@ -9,6 +9,15 @@
         "page": "2.3.0"
       },
       "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "Custom6869120904717059.json",
+      "reportVersionAtImport": {
+        "visual": "2.4.0",
+        "report": "3.0.0",
+        "page": "2.3.0"
+      },
+      "type": "RegisteredResources"
     }
   },
   "objects": {
@@ -52,6 +61,27 @@
           "name": "CY25SU10",
           "path": "BaseThemes/CY25SU10.json",
           "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "Custom6869120904717059.json",
+          "path": "Custom6869120904717059.json",
+          "type": "CustomTheme"
+        },
+        {
+          "name": "Layout_Dashboard_offres_v66738602373099909.png",
+          "path": "Layout_Dashboard_offres_v66738602373099909.png",
+          "type": "Image"
+        },
+        {
+          "name": "Layout_Dashboard_ENTREPRISES_v12813448194969512.png",
+          "path": "Layout_Dashboard_ENTREPRISES_v12813448194969512.png",
+          "type": "Image"
         }
       ]
     }

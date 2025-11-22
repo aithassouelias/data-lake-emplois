@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
-  "name": "f4b961165b518075bcaa",
+  "name": "c9fcc8b0c942398361ae",
   "position": {
-    "x": 161.42857142857144,
-    "y": 0,
-    "z": 5000,
-    "height": 82.857142857142861,
-    "width": 1118.5714285714287,
-    "tabOrder": 5000
+    "x": 294.61043602573267,
+    "y": 499.5568263045032,
+    "z": 2000,
+    "height": 70.450321658327368,
+    "width": 936.89778413152249,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "advancedSlicerVisual",
@@ -155,8 +155,8 @@
                 "color": {
                   "expr": {
                     "ThemeDataColor": {
-                      "ColorId": 0,
-                      "Percent": 0
+                      "ColorId": 4,
+                      "Percent": -0.25
                     }
                   }
                 }
@@ -256,6 +256,39 @@
           "selector": {
             "id": "interaction:rest"
           }
+        },
+        {
+          "properties": {
+            "lineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "weight": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
         }
       ],
       "selection": [
@@ -283,6 +316,22 @@
             }
           }
         }
+      ],
+      "image": [
+        {
+          "properties": {
+            "ignorePadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
       ]
     },
     "visualContainerObjects": {
@@ -293,6 +342,13 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
                 }
               }
             }

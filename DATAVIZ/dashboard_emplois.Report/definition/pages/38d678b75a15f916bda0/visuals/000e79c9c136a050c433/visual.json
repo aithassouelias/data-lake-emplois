@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "000e79c9c136a050c433",
+  "position": {
+    "x": 205.64263322884014,
+    "y": 32.100313479623829,
+    "z": 4000,
+    "height": 31.097178683385582,
+    "width": 103.32288401253919,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Type de poste",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#272d75"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "center"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

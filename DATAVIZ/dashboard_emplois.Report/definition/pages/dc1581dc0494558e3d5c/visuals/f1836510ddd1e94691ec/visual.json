@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "f1836510ddd1e94691ec",
   "position": {
-    "x": 184.28571428571431,
-    "y": 360,
-    "z": 5001,
-    "height": 360,
-    "width": 490.00000000000006,
-    "tabOrder": 5001
+    "x": 200.09925558312653,
+    "y": 260.44665012406949,
+    "z": 3000,
+    "height": 434.07775020678247,
+    "width": 516.65839536807277,
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "donutChart",
@@ -298,9 +298,8 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 5,
-                      "Percent": -0.25
+                    "Literal": {
+                      "Value": "'#4C48A7'"
                     }
                   }
                 }
@@ -340,11 +339,17 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 7,
-                      "Percent": 0.2
+                    "Literal": {
+                      "Value": "'#6366F1'"
                     }
                   }
+                }
+              }
+            },
+            "fillTransparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
                 }
               }
             }
@@ -383,7 +388,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#893395'"
+                      "Value": "'#4F46E5'"
                     }
                   }
                 }
@@ -423,9 +428,8 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 7,
-                      "Percent": 0.6
+                    "Literal": {
+                      "Value": "'#D8B4FE'"
                     }
                   }
                 }
@@ -465,9 +469,8 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 5,
-                      "Percent": 0.6
+                    "Literal": {
+                      "Value": "'#E9D5FF'"
                     }
                   }
                 }
@@ -500,6 +503,88 @@
               }
             ]
           }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#9975D7'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "D_entreprise"
+                          }
+                        },
+                        "Property": "categorie"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'PME'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#A78BFA'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "D_entreprise"
+                          }
+                        },
+                        "Property": "categorie"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Moyenne entreprise'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
         }
       ],
       "labels": [
@@ -525,7 +610,52 @@
                   "Value": "'Category, data value, percent of total'"
                 }
               }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'outside'"
+                }
+              }
             }
+          }
+        },
+        {
+          "properties": {
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#272D75'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ]
           }
         }
       ],
@@ -536,6 +666,19 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "slices": [
+        {
+          "properties": {
+            "innerRadiusRatio": {
+              "expr": {
+                "Literal": {
+                  "Value": "76L"
                 }
               }
             }
@@ -572,6 +715,28 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "background": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "null"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#272D75'"
+                    }
+                  }
                 }
               }
             }
@@ -617,25 +782,6 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "1d8ec268d0398046d16e",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "D_entreprise"
-                  }
-                },
-                "Property": "id_entreprise"
-              }
-            },
-            "Function": 5
-          }
-        },
-        "type": "Advanced"
-      },
-      {
         "name": "865a8571d571a6c611db",
         "field": {
           "Column": {
@@ -680,6 +826,13 @@
                           {
                             "Literal": {
                               "Value": "'Inconnu'"
+                            }
+                          }
+                        ],
+                        [
+                          {
+                            "Literal": {
+                              "Value": "'Iconnu'"
                             }
                           }
                         ]

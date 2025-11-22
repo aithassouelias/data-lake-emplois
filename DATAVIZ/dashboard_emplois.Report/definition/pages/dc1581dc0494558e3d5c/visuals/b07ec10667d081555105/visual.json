@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "b07ec10667d081555105",
   "position": {
-    "x": 182.85714285714286,
-    "y": 0,
-    "z": 2000,
-    "height": 340,
-    "width": 490.00000000000006,
-    "tabOrder": 2000
+    "x": 200.18957345971566,
+    "y": 20.221169036334913,
+    "z": 1000,
+    "height": 218.38862559241707,
+    "width": 516.65086887835707,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "WordCloud1447959067750",
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "F_avis.avantage",
-              "nativeQueryRef": "Premier avantage"
+              "nativeQueryRef": "Premier avantage",
+              "format": "G"
             }
           ]
         }
@@ -41,6 +42,43 @@
               "expr": {
                 "Literal": {
                   "Value": "50D"
+                }
+              }
+            },
+            "maxFontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "rotateText": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dataPoint": [
+        {
+          "properties": {
+            "defaultColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#5B62B8'"
+                    }
+                  }
                 }
               }
             }
@@ -70,6 +108,41 @@
               "expr": {
                 "Literal": {
                   "Value": "'Nuage de mots des avantages'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#272D75'"
+                    }
+                  }
+                }
+              }
+            },
+            "background": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "null"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
