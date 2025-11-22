@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
-  "name": "a392a0c75dccdb28287b",
+  "name": "aee4091eed0bd0944cec",
   "position": {
-    "x": 682.87841191066991,
-    "y": 454.19354838709677,
-    "z": 3000,
-    "height": 244.56575682382132,
-    "width": 560.06617038875106,
-    "tabOrder": 3000
+    "x": 683.13812154696132,
+    "y": 454.01104972375691,
+    "z": 8001,
+    "height": 244.68508287292818,
+    "width": 560.0883977900553,
+    "tabOrder": 8001
   },
   "visual": {
     "visualType": "clusteredColumnChart",
@@ -33,7 +33,7 @@
               },
               "queryRef": "D_calendrier.Hiérarchie Temporelle.Année",
               "nativeQueryRef": "Hiérarchie Temporelle Année",
-              "active": true
+              "active": false
             },
             {
               "field": {
@@ -53,7 +53,7 @@
               },
               "queryRef": "D_calendrier.Hiérarchie Temporelle.MoisNom",
               "nativeQueryRef": "Hiérarchie Temporelle MoisNom",
-              "active": false
+              "active": true
             }
           ]
         },
@@ -371,7 +371,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Nombre d''offres publiées par année'"
+                  "Value": "'Nombre d''offres publiées par mois'"
                 }
               }
             },
@@ -523,7 +523,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "40ac434ad78d1879d1d2",
+        "name": "2bab4a18e5a2d7020e11",
         "field": {
           "HierarchyLevel": {
             "Expression": {
@@ -542,7 +542,7 @@
         "type": "Advanced"
       },
       {
-        "name": "e35546d0020d4cae9633",
+        "name": "afc5fce17e400c7594a2",
         "field": {
           "HierarchyLevel": {
             "Expression": {
@@ -561,7 +561,7 @@
         "type": "Categorical"
       },
       {
-        "name": "695346021a3ca9c538d1",
+        "name": "4685faf70781a2ca3058",
         "field": {
           "Measure": {
             "Expression": {
@@ -575,5 +575,6 @@
         "type": "Advanced"
       }
     ]
-  }
+  },
+  "isHidden": true
 }

@@ -1,8 +1,89 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
   "name": "8673ae26b0358c5b38a5",
-  "displayName": "Détails offres",
+  "displayName": "🔎 - Détails des offres",
   "displayOption": "FitToPage",
   "height": 720,
-  "width": 1280
+  "width": 1280,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "515e74ac152e37b7063b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "D_entreprise"
+              }
+            },
+            "Property": "nom_entreprise"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "D_entreprise",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "d"
+                          }
+                        },
+                        "Property": "nom_entreprise"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'CELAD'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "Drillthrough"
+      }
+    ]
+  },
+  "pageBinding": {
+    "name": "3f804ed801e6b003de91",
+    "type": "Drillthrough",
+    "parameters": [
+      {
+        "name": "df6c5e2766bd3ca00c97",
+        "boundFilter": "515e74ac152e37b7063b",
+        "asAggregation": false,
+        "qnaSingleSelectRequired": false,
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "D_entreprise"
+              }
+            },
+            "Property": "nom_entreprise"
+          }
+        }
+      }
+    ]
+  },
+  "visibility": "HiddenInViewMode"
 }

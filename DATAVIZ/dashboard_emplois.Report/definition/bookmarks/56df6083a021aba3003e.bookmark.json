@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/1.4.0/schema.json",
   "displayName": "Offres par année",
-  "name": "2d92fee790379e1b7ec2",
+  "name": "56df6083a021aba3003e",
   "options": {
     "targetVisualNames": []
   },
@@ -15,7 +15,7 @@
             "filters": {
               "byExpr": [
                 {
-                  "name": "d189fed5361a8401c417",
+                  "name": "8863535ac6620e42367b",
                   "type": "Categorical",
                   "expression": {
                     "Column": {
@@ -30,7 +30,7 @@
                   "howCreated": 0
                 },
                 {
-                  "name": "b3985a5f0b3215512601",
+                  "name": "847cbe167ecb090e1d57",
                   "type": "Advanced",
                   "expression": {
                     "Measure": {
@@ -69,7 +69,7 @@
             "filters": {
               "byExpr": [
                 {
-                  "name": "6d98450d535c7e2ead36",
+                  "name": "b90a9b51112970730086",
                   "type": "Advanced",
                   "expression": {
                     "HierarchyLevel": {
@@ -89,7 +89,7 @@
                   "howCreated": 0
                 },
                 {
-                  "name": "3df9038f9c33008704ac",
+                  "name": "06c170953a4374c450b0",
                   "type": "Categorical",
                   "expression": {
                     "HierarchyLevel": {
@@ -109,7 +109,7 @@
                   "howCreated": 0
                 },
                 {
-                  "name": "84058eb020e03700cc10",
+                  "name": "e8bd6c2029ba7033963d",
                   "type": "Advanced",
                   "expression": {
                     "Measure": {
@@ -173,7 +173,7 @@
             "filters": {
               "byExpr": [
                 {
-                  "name": "0f9c7059b3207db36805",
+                  "name": "7c24966a04ced5c4bda7",
                   "type": "Advanced",
                   "expression": {
                     "Measure": {
@@ -271,7 +271,7 @@
                   "howCreated": 0
                 },
                 {
-                  "name": "ed9b10c5d007d01c10ad",
+                  "name": "d969eef5d92312cb5875",
                   "type": "Advanced",
                   "expression": {
                     "Measure": {
@@ -331,6 +331,258 @@
             "singleVisual": {
               "visualType": "bookmarkNavigator",
               "objects": {}
+            }
+          },
+          "b093c04b257cbdd0160c": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "eb933fe6e2d873d3e0e0",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "D_secteur"
+                        }
+                      },
+                      "Property": "secteur"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "D_secteur"
+                        }
+                      },
+                      "Property": "secteur"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "cf81a27733eed4414205": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "90f4e82bc701605e365d",
+                  "type": "Categorical",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "d",
+                        "Entity": "D_type_poste",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "Not": {
+                            "Expression": {
+                              "In": {
+                                "Expressions": [
+                                  {
+                                    "Column": {
+                                      "Expression": {
+                                        "SourceRef": {
+                                          "Source": "d"
+                                        }
+                                      },
+                                      "Property": "type_poste"
+                                    }
+                                  }
+                                ],
+                                "Values": [
+                                  [
+                                    {
+                                      "Literal": {
+                                        "Value": "'Non pertinent'"
+                                      }
+                                    }
+                                  ]
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "D_type_poste"
+                        }
+                      },
+                      "Property": "type_poste"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "advancedSlicerVisual",
+              "objects": {
+                "merge": {
+                  "selection": [
+                    {
+                      "properties": {
+                        "strictSingleSelect": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "false"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "2ffdfc876cc46d9ca8e9": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "aee4091eed0bd0944cec": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "e66d57160deb06d7c88b",
+                  "type": "Advanced",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "D_calendrier"
+                            }
+                          },
+                          "Hierarchy": "Hiérarchie Temporelle"
+                        }
+                      },
+                      "Level": "Année"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "32b4a33aa9c4700837aa",
+                  "type": "Categorical",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "D_calendrier"
+                            }
+                          },
+                          "Hierarchy": "Hiérarchie Temporelle"
+                        }
+                      },
+                      "Level": "MoisNom"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "2626854f049859d638eb",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "00. Mesures"
+                        }
+                      },
+                      "Property": "Nb_offres"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "clusteredColumnChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "D_calendrier"
+                            }
+                          },
+                          "Hierarchy": "Hiérarchie Temporelle"
+                        }
+                      },
+                      "Level": "MoisNom"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "D_calendrier"
+                            }
+                          },
+                          "Hierarchy": "Hiérarchie Temporelle"
+                        }
+                      },
+                      "Level": "MoisNom"
+                    }
+                  }
+                ]
+              },
+              "display": {
+                "mode": "hidden"
+              }
             }
           }
         }
