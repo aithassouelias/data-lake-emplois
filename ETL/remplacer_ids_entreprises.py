@@ -18,7 +18,9 @@ import importlib.util
 
 
 def _charger_module_trouver():
-  
+    """Charge dynamiquement le module trouver_entreprises_proches.py
+    et retourne les fonctions nécessaires.
+    """
     module_path = Path(__file__).parent / 'trouver_entreprises_proches.py'
     spec = importlib.util.spec_from_file_location('trouver_entreprises_proches', str(module_path))
     mod = importlib.util.module_from_spec(spec)

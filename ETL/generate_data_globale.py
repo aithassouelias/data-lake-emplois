@@ -3,14 +3,15 @@ from pathlib import Path
 import sys
 import json
 import pandas as pd
-
 import numpy as np
 
+# Configuration des chemins
 RACINE = Path(__file__).resolve().parents[1]
 CHEMIN_META = RACINE / 'DATALAKE' / '00_METADATA' / 'metadata_descriptives.csv'
 DOSSIER_SORTIE = RACINE / 'data_globale'
 DOSSIER_SORTIE.mkdir(parents=True, exist_ok=True)
 
+# Lire le fichier metadata_descriptives.csv
 print(f"Lecture du metadata depuis {CHEMIN_META}")
 lignes = []
 with open(CHEMIN_META, 'r', encoding='utf-8', errors='replace') as f:
@@ -25,6 +26,7 @@ with open(CHEMIN_META, 'r', encoding='utf-8', errors='replace') as f:
         lignes.append({'OBJECT_ID': object_id.strip(), 'TYPE_FICHIER': type_fichier.strip(), 'colonne': colonne.strip(), 'valeur': valeur.strip()})
 df_meta = pd.DataFrame(lignes)
 
+# Pivoter les données
 df_meta.columns = [c.strip() for c in df_meta.columns]
 pivot = df_meta.copy()
 pivot['valeur'] = pivot['valeur'].astype(str).replace({'None':'', 'nan':''})
@@ -36,6 +38,7 @@ tableau_large = pivot.groupby(['OBJECT_ID','TYPE_FICHIER','colonne'], as_index=F
 tableau_large.columns.name = None
 tableau_large = tableau_large.rename_axis(None, axis=1)
 
+# Fonction pour créer les id
 def creer_table_id(series, col_name, id_name):
     s = series.dropna().map(lambda x: x.strip()).replace('', np.nan).dropna().drop_duplicates().reset_index(drop=True)
     out = pd.DataFrame({col_name: s})
@@ -43,6 +46,7 @@ def creer_table_id(series, col_name, id_name):
     out = out[[id_name, col_name]]
     return out
 
+# créer les tables de dimension en df pandas
 if 'ville' in tableau_large.columns:
     d_ville = creer_table_id(tableau_large['ville'], 'ville', 'id_ville')
 else:
@@ -115,6 +119,9 @@ def en_float_sur(x):
         return float(str(x).replace(',', '.'))
     except Exception:
         return None
+################################################
+# Génération de la table d_note
+###############################################
 
 note_vals = note_series.map(en_float_sur).dropna().drop_duplicates().reset_index(drop=True)
 if not note_vals.empty:
@@ -124,6 +131,9 @@ if not note_vals.empty:
 else:
     d_note = pd.DataFrame(columns=['id_note','note'])
 
+################################################
+# Génération de la table d_entreprise
+################################################
 ent_cols = []
 for c in ['nom_entreprise','entreprise']:
     if c in tableau_large.columns:
@@ -149,6 +159,7 @@ if not source_entreprise.empty:
 else:
     d_entreprise = pd.DataFrame(columns=['id_entreprise','id_secteur','nom_entreprise','taille'])
 
+# créer des mappings pour les ids
 ville_vers_id = dict(zip(d_ville['ville'], d_ville['id_ville'])) if not d_ville.empty else {}
 secteur_vers_id = dict(zip(d_secteur['secteur'], d_secteur['id_secteur'])) if not d_secteur.empty else {}
 entreprise_vers_id = {}
@@ -162,6 +173,9 @@ note_vers_id = dict()
 if not d_note.empty:
     note_vers_id = dict(zip(d_note['note'], d_note['id_note']))
 
+###############################################################
+# Génération de la table F_offres
+################################################################
 offres = []
 offer_rows = tableau_large[tableau_large.get('libelle_emploi').notna() | tableau_large.get('texte').notna()]
 next_offre_id = 1
@@ -193,6 +207,9 @@ for _,r in offer_rows.iterrows():
 
 F_offres = pd.DataFrame(offres)
 
+#############################################################
+# Génération de la table F_avis
+#############################################################
 liste_avis = []
 next_avis_id = 1
 
@@ -252,6 +269,9 @@ for _,r in avis_rows.iterrows():
 
 F_avis = pd.DataFrame(liste_avis)
 
+###############################################################
+# Écriture des fichiers CSV pour les différentes tables
+###############################################################
 print('Ecriture des CSV vers', DOSSIER_SORTIE)
 
 d_ville.to_csv(DOSSIER_SORTIE / 'd_ville.csv', index=False, encoding='utf-8')
@@ -266,7 +286,3 @@ print('Terminé. Fichiers créés:')
 for p in DOSSIER_SORTIE.iterdir():
     if p.is_file():
         print(' -', p.name)
-
-print('\nNotes:')
-print(' - Les colonnes manquantes dans le fichier metadata seront laissées vides dans les CSV (valeurs NULL).')
-print(' - Vérifiez les correspondances entreprise<->secteur/ville avant chargement en base si besoin.')

@@ -1,12 +1,4 @@
-# -*- coding: utf-8 -*-
 #======================================================================================
-# Auteur: Eric KLOECKLE
-# Etablissement: Université Lumière Lyon 2 - Bron
-# Cursus: Master 2 BI&A : « Business Intelligence & Analytics »
-# Domaine: « Gestion de données massives »
-# Cours: Enseignement TD Datalake-House
-#
-#--------------------------------------------------------------------------------------
 # 02-PHASE-2_Extraction_des_donnéees_descriptives_de_la_LANDINGZONE_vers_la_CURATED-ZONE_v0.01.py
 #======================================================================================
 
@@ -375,9 +367,10 @@ def extraire_date_posted_EMP(soup):
         print("Erreur lors de l'extraction de la date :", e)
         return 'NULL'
 
-"""
-Utilisation des fonctions d'extraction pour lire les fichiers HTML dans la curated zone
-"""
+
+############################################################################
+# Utilisation des fonctions d'extraction pour lire les fichiers HTML dans la curated zone
+############################################################################
 
 # Lecture des métadonnées techniques pour obtenir la liste des fichiers cibles
 metadonnees_techniques = "./DATALAKE/00_METADATA/metadata_technique.csv"
@@ -610,7 +603,7 @@ df_final.to_csv(
     index=False,
     encoding='utf-8',
     quoting=csv.QUOTE_NONE,
-    escapechar='\\'  # nécessaire pour éviter les erreurs sur les retours à la ligne
+    escapechar='\\'  
 )
 
 print("✅ Fichier de métadonnées descriptives créé")

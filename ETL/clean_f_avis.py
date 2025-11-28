@@ -4,6 +4,7 @@ import pandas as pd
 from dateutil import parser
 import re
 
+# Configuration des chemins
 RACINE = Path(__file__).resolve().parents[1]
 CHEMIN_F_AVIS = RACINE / 'data_globale_etl' / 'F_avis.csv'
 
@@ -13,6 +14,7 @@ if not CHEMIN_F_AVIS.exists():
 print('Lecture de', CHEMIN_F_AVIS)
 df_avis = pd.read_csv(CHEMIN_F_AVIS, dtype=str, encoding='utf-8', keep_default_na=False)
 
+#  Fonctions de nettoyage
 def nettoyer_texte(s: str) -> str:
     if s is None:
         return ''
@@ -25,6 +27,7 @@ def nettoyer_texte(s: str) -> str:
     s = re.sub(r"\s+", ' ', s).strip()
     return s
 
+# Normalisation des dates
 def formater_date(s: str) -> str:
     s = nettoyer_texte(s)
     if not s:
@@ -41,12 +44,14 @@ def formater_date(s: str) -> str:
 
 colonnes = list(df_avis.columns)
 
+# Normalisation de la colonne date_publication
 if 'date_publication' in df_avis.columns:
     print('Normalisation de date_publication...')
     df_avis['date_publication'] = df_avis['date_publication'].apply(formater_date)
 else:
     print('Colonne date_publication introuvable')
 
+# Nettoyage des colonnes texte
 colonnes_texte = ['contenu_avis', 'inconvenient', 'avantage']
 for col in colonnes_texte:
     if col in df_avis.columns:
@@ -63,6 +68,7 @@ colonnes_a_traiter = [c for c in df_avis.columns if c != 'id_avis']
 if colonnes_a_traiter:
     df_avis[colonnes_a_traiter] = df_avis[colonnes_a_traiter].replace(r'^\s*$', 'NULL', regex=True)
 
+# Ecriture du fichier nettoyé
 sauvegarde = CHEMIN_F_AVIS.with_suffix('.bak.csv')
 print('Ecriture de la sauvegarde vers', sauvegarde)
 df_avis.to_csv(sauvegarde, index=False, encoding='utf-8')

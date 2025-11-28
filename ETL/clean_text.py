@@ -1,3 +1,7 @@
+#======================================================================================
+# Ce fichier contient des fonctions pour nettoyer du texte en français dans le cadre du processus ETL pour les avis
+# Cela nous permettra de réaliser des nuages de mots
+#=============================================================================================
 import pandas as pd
 import string
 import nltk
@@ -9,11 +13,19 @@ nltk.download("stopwords")
 # Stopwords français
 stopwords_fr = set(stopwords.words("french"))
 stopwords_custom = {"l'", "il y a", "telques", "assez", "être", "chez"}
-
 stopwords_fr = stopwords_fr.union(stopwords_custom)
 
 
 def nettoyer_texte(text):
+    """
+    Nettoie une chaîne de caractères en français pour l'ETL.
+
+    Args:
+        text (str): Le texte à nettoyer.
+
+    Returns:
+        str: Le texte nettoyé (chaîne vide si entrée manquante).
+    """
     if pd.isna(text):
         return ""
 
@@ -47,15 +59,13 @@ def nettoyer_texte(text):
 
 
 
-# Charger ton CSV
+# Charger fichier CSV des avis
 df = pd.read_csv("./data_globale_etl/F_avis.csv")
 
-# Nettoyer les colonnes
+# Nettoyer les colonnes avantage et inconvenient
 df["avantage"] = df["avantage"].apply(nettoyer_texte)
 df["inconvenient"] = df["inconvenient"].apply(nettoyer_texte)
 
-# Aperçu
-print(df.columns)
-
+# Sauvegarder le DataFrame nettoyé
 df.to_csv("F_avis.csv", index=False, encoding="utf-8")
 

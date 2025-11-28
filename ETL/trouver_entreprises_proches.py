@@ -18,6 +18,14 @@ import csv
 
 
 def normaliser_chaine(s: str) -> str:
+    """
+    Docstring for normaliser_chaine
+    
+    :param s: chaine de caractères à normaliser
+    :type s: str
+    :return: chaine de caractères normalisée
+    :rtype: str
+    """
     if s is None:
         return ''
     s2 = str(s).strip().lower()
@@ -28,6 +36,9 @@ def normaliser_chaine(s: str) -> str:
 
 
 def charger_entreprises(chemin_csv: Path) -> pd.DataFrame:
+    """
+    Charge le CSV d_entreprise et prépare les colonnes pour le matching fuzzy.
+    """
     if not chemin_csv.exists():
         raise FileNotFoundError(f"Fichier introuvable: {chemin_csv}")
     df = pd.read_csv(chemin_csv, dtype=str, encoding='utf-8', keep_default_na=False)
@@ -70,6 +81,7 @@ def trouver_paires_proches(df: pd.DataFrame, seuil: float = 0.85):
 
 
 def regrouper_composantes(n_pairs, n):
+    """Regroupe les paires d'indices en composantes connexes (clusters)."""
  
     parent = list(range(n))
 
@@ -170,6 +182,6 @@ def main():
 
     print('\nTerminé.')
 
-
+# Exécuter le script ETL
 if __name__ == '__main__':
     main()

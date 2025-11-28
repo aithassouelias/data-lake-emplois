@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 import pandas as pd
 
-
+# Fonctions de nettoyage
 def normaliser_texte(s: str) -> str:
     if pd.isna(s):
         return ''
@@ -20,7 +20,7 @@ def normaliser_texte(s: str) -> str:
     s = re.sub(r'\s+', ' ', s).strip()
     return s
 
-
+# Normalisation des dates au format jj/mm/aa
 def normaliser_date_iso_vers_jjmmaa(s: str) -> str:
     if pd.isna(s) or s == '':
         return 'NULL'
@@ -33,8 +33,9 @@ def normaliser_date_iso_vers_jjmmaa(s: str) -> str:
     except Exception:
         return 'NULL'
 
-
+# Fonction principale 
 def principal():
+    # Configuration des chemins
     racine_repo = Path(__file__).resolve().parent.parent
     chemin_src = racine_repo / 'data_globale' / 'F_offres.csv'
     dossier_sortie = racine_repo / 'data_globale_etl'
@@ -45,9 +46,11 @@ def principal():
     if not chemin_src.exists():
         print(f"Fichier source introuvable: {chemin_src}")
         return
-
+    
+    # Lecture du fichier source
     df_offres = pd.read_csv(chemin_src, dtype=str, keep_default_na=False)
 
+    # Nettoyage des colonnes texte
     colonnes_texte = [c for c in df_offres.columns if c.lower() in ('libelle_emploi', 'contenu', 'description', 'libelle')]
     for col in colonnes_texte:
         print(f"Nettoyage de la colonne texte: {col}")
@@ -69,9 +72,10 @@ def principal():
         chemin_dest.rename(sauvegarde)
         print(f'Sortie existante sauvegardée vers: {sauvegarde}')
 
+    # Ecriture du fichier nettoyé
     df_offres.to_csv(chemin_dest, index=False, quoting=csv.QUOTE_MINIMAL)
     print(f'Ecriture du fichier nettoyé vers: {chemin_dest}')
 
-
+# Lancer le script
 if __name__ == '__main__':
     principal()

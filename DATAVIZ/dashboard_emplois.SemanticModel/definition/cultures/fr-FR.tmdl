@@ -1786,16 +1786,6 @@ cultureInfo fr-FR
 			          "secteur": {
 			            "State": "Generated"
 			          }
-			        },
-			        {
-			          "Secteur d'activité": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },

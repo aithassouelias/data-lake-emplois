@@ -4,6 +4,7 @@ import re
 import unicodedata
 import pandas as pd
 
+# Configuration des chemins
 RACINE = Path(__file__).resolve().parents[1]
 REPERTOIRE_ENTREE = RACINE / 'data_globale'
 REPERTOIRE_SORTIE = RACINE / 'data_globale_etl'
@@ -15,12 +16,22 @@ fichier_sortie_ville = REPERTOIRE_SORTIE / 'd_ville.csv'
 if not fichier_ville.exists():
     raise FileNotFoundError(f"Fichier source introuvable: {fichier_ville}")
 
+
 def enlever_accents(s: str) -> str:
+    """
+    Docstring for enlever_accents
+    
+    :param s: chaîne de caractères à normaliser
+    :type s: str
+    :return: chaine de caractères sans accents
+    :rtype: str
+    """
     if s is None:
         return ''
     nfkd = unicodedata.normalize('NFKD', s)
     return ''.join([c for c in nfkd if not unicodedata.combining(c)])
 
+# Dictionnaire de mots-clés pour détecter les pays
 COUNTRY_KEYWORDS = {
     'etats-unis': 'États-Unis', 'etats unis': 'États-Unis', 'etatsunis': 'États-Unis',
     'royaume-uni': 'Royaume-Uni', 'angleterre': 'Royaume-Uni', 'uk': 'Royaume-Uni',
@@ -30,13 +41,23 @@ COUNTRY_KEYWORDS = {
     'espagne': 'Espagne', 'irlande': 'Irlande'
 }
 
+# Mots-clés pour détecter les régions françaises
 FRENCH_REGION_KEYWORDS = [
     'ile-de-france', 'auvergne', 'rhone', 'rhone-alpes', 'provence', 'aquitaine', 'nouvelle-aquitaine',
     'ile de france', 'auvergne-rhone', 'provence-alpes', 'hauts-de-seine', 'ile-de-france',
     'france', 'fr'
 ]
 
+
 def normaliser_texte(s: str) -> str:
+    """
+    Docstring for normaliser_texte
+    
+    :param s: chaine de caractères à normaliser
+    :type s: str
+    :return: chaine de caractères normalisée
+    :rtype: str
+    """
     if s is None:
         return ''
     s2 = str(s).strip()
@@ -46,6 +67,14 @@ def normaliser_texte(s: str) -> str:
     return s2
 
 def detecter_pays_depuis_texte(text: str) -> str | None:
+    """
+    Docstring for detecter_pays_depuis_texte
+    
+    :param text: chaine de caractères à analyser
+    :type text: str
+    :return: nom du pays détecté ou None
+    :rtype: str | None
+    """
     if not text:
         return None
     t = enlever_accents(text.lower())
@@ -62,6 +91,13 @@ def detecter_pays_depuis_texte(text: str) -> str | None:
     return None
 
 def parser_ville_pays(raw: str):
+    """
+    Parse une chaîne pour extraire la ville et le pays.
+    :param raw: chaîne brute contenant la ville et éventuellement le pays
+    :type raw: str
+    :return: tuple (ville, pays)
+    :rtype: tuple[str, str]
+    """
     s = normaliser_texte(raw)
     if not s:
         return ('', '')
@@ -87,6 +123,9 @@ def parser_ville_pays(raw: str):
     return (s, 'France')
 
 def executer():
+    """
+    Exécute le processus ETL pour nettoyer et normaliser d_ville.csv.
+    """
     df = pd.read_csv(fichier_ville, dtype=str, encoding='utf-8', keep_default_na=False)
     df.columns = [c.strip() for c in df.columns]
     if 'id_ville' not in df.columns:
@@ -149,6 +188,6 @@ def executer():
     df_sortie.to_csv(fichier_sortie_ville, index=False, encoding='utf-8')
     print('Ecriture de :', fichier_sortie_ville)
 
-
+# Exécuter le script ETL
 if __name__ == '__main__':
     executer()
