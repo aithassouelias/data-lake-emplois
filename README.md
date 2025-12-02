@@ -26,3 +26,45 @@ Le travail inclut :
 
 ## 🏗️ Architecture du projet
 
+### `datalake/`
+Contient l’ensemble des zones du Data Lake, depuis les données sources jusqu’aux tables prêtes pour l’analyse.
+
+- **00_FICHIER_METADATA/**  
+  Regroupe les fichiers de métadonnées : dictionnaire des champs, description des sources, schéma du Data Lake.
+
+- **0_SOURCE_DE_DONNEES/**  
+  Données brutes collectées avant tout traitement (fichiers HTML).
+
+- **1_LANDING_ZONE/**  
+  Zone d’atterrissage contenant les données juste après extraction, dans leur format d’origine mais structurées en fonction de leur source et écritures des métadonnées         techniques.
+
+- **2_CURATED_ZONE/**  
+  Extraction des données utiles dans les fichiers et écritures des métadonnées descriptives.
+
+- **3_PRODUCTION_ZONE/**  
+  Zone finale contenant les tables de faits et dimensions du Data Warehouse, prêtes pour les analyses et tableaux de bord.
+
+
+### `ETL/`
+Scripts Python responsables de l’ensemble du pipeline ETL :
+- nettoyage,
+- standardisation,
+- enrichissement (API, règles métier),
+- génération des clés,
+- chargement des tables dans le DW.
+
+Inclut aussi des utilitaires : fonctions de nettoyage, appel API, classification, etc.
+
+
+### `dataviz/`
+Regroupe tout ce qui concerne la restitution :
+- rapports Power BI (fichiers `.pbix`),
+
+
+---
+
+## 🤝 Contributeurs
+
+- Yousra Bouhanna
+- Abdeldjebbar Abid
+- Elias Ait Hassou
