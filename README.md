@@ -58,7 +58,7 @@ Inclut aussi des utilitaires : fonctions de nettoyage, appel API, classification
 
 ### `dataviz/`
 Regroupe tout ce qui concerne la restitution :
-- rapports Power BI (fichiers `.pbix`),
+- rapport Power BI (fichier `.pbip`),
 
 
 ---
